@@ -1,0 +1,7 @@
+{
+    "@@locale": "zh_CN",
+    "appName": "Mditor",
+    "home": "笔记",
+    "add": "添加",
+    "hello": "嗨, {name}"
+}

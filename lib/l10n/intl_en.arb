@@ -1,0 +1,22 @@
+{
+    "@@locale": "en",
+    "appName": "Mditor",
+    "@appName": {
+        "description": "The application name"
+    },
+    "hello": "Hello, {name}",
+    "@hello": {
+        "description": "A welcome message",
+        "placeholders": {
+            "name": {}
+        }
+    },
+    "add": "Add",
+    "@add": {
+        "description": "Add label"
+    },
+    "home": "Notes",
+    "@home": {
+        "description": "Home title"
+    }
+}
