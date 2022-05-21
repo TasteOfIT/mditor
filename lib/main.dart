@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mditor/edit/editor.dart';
 
 import 'design/locale.dart';
 import 'design/theme.dart';
@@ -12,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: MyHomePage(onGenerateTitle: (context) => S.of(context).home),
+      home: const NotesList(),
+      routes: {Editor.routeName: (context) => const Editor()},
     );
   }
 }

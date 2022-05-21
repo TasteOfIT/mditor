@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../edit/editor.dart';
 import '../generated/l10n.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.onGenerateTitle}) : super(key: key);
+class NotesList extends StatefulWidget {
+  const NotesList({Key? key}) : super(key: key);
 
-  final GenerateAppTitle onGenerateTitle;
+  GenerateAppTitle get onGenerateTitle => (context) => S.of(context).home;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<NotesList> createState() => _NotesListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _NotesListState extends State<NotesList> {
   void _addNote() {
+    Navigator.pushNamed(context, Editor.routeName);
     setState(() {});
   }
 
