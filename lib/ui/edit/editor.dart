@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
 
 class Editor extends StatefulWidget {
-  const Editor({Key? key}) : super(key: key);
+  const Editor({Key? key, this.initialText = '', this.onChanged}) : super(key: key);
 
   static const routeName = '/edit';
+
+  final String initialText;
+  final ValueChanged? onChanged;
 
   GenerateAppTitle get onGenerateTitle => (context) => S.of(context).add;
 
@@ -16,6 +19,20 @@ class Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<Editor> {
+  final TextEditingController _controller = TextEditingController();
+
+  String get text => _controller.value.text;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller
+      ..text = widget.initialText
+      ..addListener(() {
+        widget.onChanged?.call(text);
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +60,13 @@ class _EditorState extends State<Editor> {
           scrollPadding: const EdgeInsets.all(20.0),
           keyboardType: TextInputType.multiline,
           autofocus: true,
-          onChanged: (text) {},
+          controller: _controller,
         ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
