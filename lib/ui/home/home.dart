@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
 import '../edit/editor.dart';
-import '../generated/l10n.dart';
 
 class NotesList extends StatefulWidget {
   const NotesList({Key? key}) : super(key: key);

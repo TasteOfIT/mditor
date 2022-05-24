@@ -47,6 +47,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  # launcher icons
+  icons_launcher: ^1.1.8
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -90,3 +93,10 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
   enabled: true
+
+flutter_icons:
+  macos: true
+  android: true
+  ios: true
+  image_path: 'assets/icon/launcher.png'
+  image_path_ios: 'assets/icon/launcher-ios.png'

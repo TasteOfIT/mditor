@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../generated/l10n.dart';
+import '../../generated/l10n.dart';
 
 class Editor extends StatefulWidget {
   const Editor({Key? key, this.initialText = '', this.onChanged}) : super(key: key);
