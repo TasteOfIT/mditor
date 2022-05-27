@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../generated/l10n.dart';
-import '../edit/editor.dart';
+import '../../l10n/generated/l10n.dart';
+import '../editor/editor.dart';
 
-class NotesList extends StatefulWidget {
-  const NotesList({Key? key}) : super(key: key);
+class Notes extends StatefulWidget {
+  const Notes({Key? key}) : super(key: key);
 
   GenerateAppTitle get onGenerateTitle => (context) => S.of(context).home;
 
   @override
-  State<NotesList> createState() => _NotesListState();
+  State<Notes> createState() => _NotesState();
 }
 
-class _NotesListState extends State<NotesList> {
+class _NotesState extends State<Notes> {
   void _addNote() {
     Navigator.pushNamed(context, Editor.routeName);
     setState(() {});
