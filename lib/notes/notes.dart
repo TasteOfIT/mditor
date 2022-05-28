@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/generated/l10n.dart';
-import '../editor/editor.dart';
+import '../../l10n/l10n.dart';
+import '../app/routes.dart';
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class Notes extends StatefulWidget {
 
 class _NotesState extends State<Notes> {
   void _addNote() {
-    Navigator.pushNamed(context, Editor.routeName);
+    Navigator.pushNamed(context, Routes.routeEditor);
     setState(() {});
   }
 

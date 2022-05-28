@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/generated/l10n.dart';
+import '../../l10n/l10n.dart';
 
 class Editor extends StatefulWidget {
   const Editor({Key? key, this.initialText = '', this.onChanged}) : super(key: key);
-
-  static const routeName = '/edit';
 
   final String initialText;
   final ValueChanged? onChanged;

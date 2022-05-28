@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../design/locale.dart';
 import '../design/theme.dart';
-import '../editor/editor.dart';
-import '../l10n/generated/l10n.dart';
-import '../notes/notes.dart';
-import '../viewer/viewer.dart';
+import '../l10n/l10n.dart';
+import 'routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ThemeModeCubit(),
+      child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, themeMode) {
+        return AppView(themeMode: themeMode);
+      }),
+    );
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({Key? key, this.themeMode = ThemeMode.system}) : super(key: key);
+
+  final ThemeMode themeMode;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +31,10 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) => S.of(context).appName,
       localizationsDelegates: localizationDelegates,
       supportedLocales: S.delegate.supportedLocales,
+      themeMode: themeMode,
       theme: MditorTheme.light,
       darkTheme: MditorTheme.dark,
-      home: const Notes(),
-      routes: {
-        Editor.routeName: (context) => const Editor(),
-        Viewer.routeName: (context) => const Viewer(),
-      },
+      onGenerateRoute: (settings) => Routes.createRoute(settings),
     );
   }
 }
