@@ -4,6 +4,8 @@ import '../editor/editor.dart';
 import '../notes/notes.dart';
 import '../viewer/viewer.dart';
 
+export 'models/doc.dart';
+
 class Routes {
   static const routeHome = '/';
   static const routeEditor = '/edit';

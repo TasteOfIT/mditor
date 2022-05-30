@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../design/locale.dart';
 import '../design/theme.dart';
-import '../l10n/l10n.dart';
+import '../l10n/wording.dart';
 import 'routes.dart';
+
+export 'app_bloc_observer.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'app/app.dart';
-import 'app/app_bloc_observer.dart';
 import 'data/storage.dart';
 
 void main() async {
