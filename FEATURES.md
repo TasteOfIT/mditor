@@ -1,11 +1,16 @@
 ## Ready to go
 
-## To do
-
 - Edit/View markdown
     1. Basic
         - Basic editor
         - Html viewer
+
+## To do
+
+- Edit/View markdown
+    1. ~~Basic~~
+        - ~~Basic editor~~
+        - ~~Html viewer~~
     2. Custom viewer
         - Text from flutter
         - Theme
@@ -20,7 +25,8 @@
         - Auto save
         - File tree
     2. Data storage
-        - Git repo
+        - File system with Git commands(Desktop)
+        - Joplin API
         - WebDAV
     3. Export
         - Html
