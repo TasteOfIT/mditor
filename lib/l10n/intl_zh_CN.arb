@@ -3,5 +3,9 @@
     "appName": "Mditor",
     "home": "笔记",
     "add": "添加",
-    "hello": "嗨, {name}"
+    "hello": "嗨, {name}",
+    "notebooks": "所有笔记本",
+    "settings": "设置",
+    "addNotebook": "新建笔记本",
+    "noNotebooks": "没有笔记本"
 }

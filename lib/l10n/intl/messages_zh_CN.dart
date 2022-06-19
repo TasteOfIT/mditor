@@ -25,8 +25,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("添加"),
+        "addNotebook": MessageLookupByLibrary.simpleMessage("新建笔记本"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "hello": m0,
-        "home": MessageLookupByLibrary.simpleMessage("笔记")
+        "home": MessageLookupByLibrary.simpleMessage("笔记"),
+        "noNotebooks": MessageLookupByLibrary.simpleMessage("没有笔记本"),
+        "notebooks": MessageLookupByLibrary.simpleMessage("所有笔记本"),
+        "settings": MessageLookupByLibrary.simpleMessage("设置")
       };
 }

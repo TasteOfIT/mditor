@@ -37,8 +37,9 @@ dependencies:
   hydrated_bloc: ^8.1.0
   equatable: ^2.0.3
 
-  # For file system path
+  # For file management
   path_provider: ^2.0.10
+  flutter_treeview: ^1.0.7+1
 
   # Documents
   flutter_widget_from_html_core: ^0.8.5

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/routes.dart';
 import '../../l10n/wording.dart';
+import 'drawer.dart';
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _NotesState extends State<Notes> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.onGenerateTitle(context)),
       ),
+      drawer: NotesDrawer.get(context),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

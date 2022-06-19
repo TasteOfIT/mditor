@@ -89,6 +89,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Notebooks`
+  String get notebooks {
+    return Intl.message(
+      'Notebooks',
+      name: 'notebooks',
+      desc: 'Label of notebooks',
+      args: [],
+    );
+  }
+
+  /// `New notebook`
+  String get addNotebook {
+    return Intl.message(
+      'New notebook',
+      name: 'addNotebook',
+      desc: 'Label of add notebook',
+      args: [],
+    );
+  }
+
+  /// `No notebooks`
+  String get noNotebooks {
+    return Intl.message(
+      'No notebooks',
+      name: 'noNotebooks',
+      desc: 'Message: no notebooks',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: 'Label of settings',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

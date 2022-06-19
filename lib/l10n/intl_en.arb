@@ -18,5 +18,21 @@
     "home": "Notes",
     "@home": {
         "description": "Home title"
+    },
+    "notebooks": "Notebooks",
+    "@notebooks": {
+        "description": "Label of notebooks"
+    },
+    "addNotebook": "New notebook",
+    "@addNotebook": {
+     "description": "Label of add notebook"
+    },
+    "noNotebooks": "No notebooks",
+    "@noNotebooks": {
+    "description": "Message: no notebooks"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Label of settings"
     }
 }

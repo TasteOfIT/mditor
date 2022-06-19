@@ -142,6 +142,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_treeview:
+    dependency: "direct main"
+    description:
+      name: flutter_treeview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7+1"
   flutter_widget_from_html_core:
     dependency: "direct main"
     description:
