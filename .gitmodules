@@ -1,0 +1,3 @@
+[submodule "packages/joplin_database"]
+	path = packages/joplin_database
+	url = git@github.com:TasteOfIT/joplin_database.git
