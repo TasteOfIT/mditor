@@ -11,3 +11,5 @@ The API for joplin server
     - [docker guide](https://medium.com/rahasak/replace-docker-desktop-with-minikube-and-hyperkit-on-macos-783ce4fb39e3)
     - run `docker-compose up -d` in `./server` to start in docker
     - run `docker-compose down` in `./server` to stop in docker
+    - View `APP_BASE_URL` in `.env` to access joplin data
+    - Default joplin email `admin@localhost` and password `admin`
