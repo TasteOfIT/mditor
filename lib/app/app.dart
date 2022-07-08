@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../design/locale.dart';
 import '../design/theme.dart';
 import '../l10n/wording.dart';
-import 'routes.dart';
 
 export 'app_bloc_observer.dart';
+export 'app_routes.dart';
+export 'models/doc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,14 +31,15 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       onGenerateTitle: (context) => S.of(context).appName,
       localizationsDelegates: localizationDelegates,
       supportedLocales: S.delegate.supportedLocales,
       themeMode: themeMode,
       theme: MditorTheme.light,
       darkTheme: MditorTheme.dark,
-      onGenerateRoute: (settings) => Routes.createRoute(settings),
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
     );
   }
 }

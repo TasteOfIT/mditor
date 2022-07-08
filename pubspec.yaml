@@ -31,7 +31,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  # Bloc
+  # Bloc - state management
   bloc: ^8.0.1
   flutter_bloc: ^8.0.0
   hydrated_bloc: ^8.1.0
@@ -44,6 +44,10 @@ dependencies:
   # Documents
   flutter_widget_from_html_core: ^0.8.5
   markdown: ^5.0.0
+
+  # Dependency injection
+  flutter_modular: ^5.0.3
+  modular_bloc_bind: ^1.0.1
 
 dev_dependencies:
   flutter_test:

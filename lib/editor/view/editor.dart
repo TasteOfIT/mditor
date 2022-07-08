@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../app/routes.dart';
+import '../../app/app.dart';
 import '../../l10n/wording.dart';
 
 class Editor extends StatefulWidget {
