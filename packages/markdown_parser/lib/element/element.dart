@@ -6,8 +6,9 @@ class Paragraphs extends MarkDownElement {
 
 class Heading extends MarkDownElement {
   int level;
+  String text;
 
-  Heading(this.level);
+  Heading(this.level, this.text);
 }
 
 enum EmphasisType { bold, italic, boldAndItalic }

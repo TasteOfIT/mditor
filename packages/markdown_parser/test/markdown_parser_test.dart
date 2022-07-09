@@ -1,12 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:markdown_parser/element/element.dart';
 
 import 'package:markdown_parser/markdown_parser.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
+  test('given text `## header`,when parse,then the first element is Heading',
+      () {
+    MarkdownParser parser = MarkdownParser();
+    String text = "## header";
+
+    List<MarkDownElement> elements = parser.parse(text);
+
+    var isHeading = elements.first is Heading;
+    expect(isHeading, true);
+    expect((elements.first as Heading).level, 2);
+    expect((elements.first as Heading).text, "header");
   });
 }

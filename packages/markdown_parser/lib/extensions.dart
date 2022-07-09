@@ -18,7 +18,8 @@ final _headingPattern = RegExp("h[1-6]");
 MarkDownElement? convertElement(Element element) {
   MarkDownElement? result;
   if (_headingPattern.hasMatch(element.tag)) {
-    result = Heading(element.tag.substring(1, 2) as int);
+    result =
+        Heading(int.parse(element.tag.substring(1, 2)), element.textContent);
   }
   return result;
 }
