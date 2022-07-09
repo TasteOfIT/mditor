@@ -1,7 +1,27 @@
 library markdown_parser;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+import 'dart:convert';
+
+import 'package:markdown/markdown.dart';
+import 'package:markdown_parser/extensions.dart';
+
+import 'element/element.dart';
+
+class MarkdownParser {
+  Document document = Document(
+      extensionSet: ExtensionSet.gitHubFlavored,
+      blockSyntaxes: ExtensionSet.gitHubFlavored.blockSyntaxes,
+      inlineSyntaxes: ExtensionSet.gitHubFlavored.inlineSyntaxes);
+
+  List<MarkDownElement> parse(String content) {
+    List<MarkDownElement> elements = <MarkDownElement>[];
+    List<Node> nodes =
+        document.parseLines(const LineSplitter().convert(content));
+
+    for (Node node in nodes) {
+      elements.add(node.convertToMarkDownElement());
+    }
+
+    return elements;
+  }
 }
