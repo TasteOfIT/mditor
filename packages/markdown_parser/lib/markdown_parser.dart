@@ -14,9 +14,8 @@ class MarkdownParser {
       inlineSyntaxes: ExtensionSet.gitHubFlavored.inlineSyntaxes);
 
   List<MarkDownElement> parse(String content) {
-    List<MarkDownElement> elements = <MarkDownElement>[];
-    List<Node> nodes =
-        document.parseLines(const LineSplitter().convert(content));
+    var elements = <MarkDownElement>[];
+    var nodes = document.parseLines(const LineSplitter().convert(content));
 
     for (Node node in nodes) {
       elements.add(node.convertToMarkDownElement());
