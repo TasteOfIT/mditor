@@ -49,6 +49,10 @@ dependencies:
   flutter_modular: ^5.0.3
   modular_bloc_bind: ^1.0.1
 
+  # Joplin
+  joplin_database:
+    path: packages/joplin_database
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
