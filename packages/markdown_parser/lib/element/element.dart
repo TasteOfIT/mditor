@@ -11,7 +11,7 @@ class Heading extends MarkDownElement {
   Heading(this.level, this.text);
 }
 
-enum EmphasisType { bold, italic, boldAndItalic }
+enum EmphasisType { bold, italic, boldAndItalic, code }
 
 class Emphasis extends MarkDownElement {
   EmphasisType type;
@@ -22,6 +22,12 @@ class Emphasis extends MarkDownElement {
 
 class Paragraph extends MarkDownElement {
   late List<MarkDownElement> children;
+}
+
+class CodeBlock extends MarkDownElement {
+  String text;
+
+  CodeBlock(this.text);
 }
 
 class UnParsed extends MarkDownElement {

@@ -13,6 +13,29 @@ extension NodeExtensions on Node {
   }
 }
 
+extension ElementExtensions on Element {
+  Text? getDeepestText() {
+    var current = this;
+    Text? text;
+    while (text == null) {
+      var children = current.children;
+      if (children != null && children.length != 1) {
+        break;
+      } else {
+        var child = current.children?.first;
+        if (child is Element) {
+          current = child;
+        } else if (child is Text) {
+          text = child;
+        } else {
+          break;
+        }
+      }
+    }
+    return text;
+  }
+}
+
 final _headingPattern = RegExp("h[1-6]");
 
 MarkDownElement? _convertElement(Element element) {
@@ -40,6 +63,11 @@ MarkDownElement? _convertElement(Element element) {
     }
     result = paragraph;
   }
+
+  //code block
+  if (element.tag == 'pre') {
+    result = CodeBlock(element.getDeepestText()?.textContent ?? "");
+  }
   return result;
 }
 
@@ -52,6 +80,11 @@ void _convertEmphasis(Element node, Paragraph paragraph) {
     case "em":
       if (node.children?.first is Text) {
         paragraph.children.add(Emphasis(EmphasisType.italic, childText ?? ""));
+      }
+      break;
+    case "code":
+      if (node.children?.first is Text) {
+        paragraph.children.add(Emphasis(EmphasisType.code, childText ?? ""));
       }
   }
 }
