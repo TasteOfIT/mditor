@@ -13,3 +13,8 @@ The API for joplin server
     - run `docker-compose down` in `./server` to stop in docker
     - View `APP_BASE_URL` in `.env` to access joplin data
     - Default joplin email `admin@localhost` and password `admin`
+
+- Database locations
+    - joplin on Mac: `~/.config/joplin-desktop/database.sqlite`
+    - joplin server on Docker: host-`docker.local`, port-`5432`, check `server/.env` for db/user/pw
+    - mditor on Mac: `~/Library/Containers/io.github.okiele.mditor/Data/Documents`

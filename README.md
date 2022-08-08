@@ -18,6 +18,7 @@ A markdown editor
     - `sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer`
     - `sudo xcodebuild -runFirstLaunch`
     - `sudo gem install cocoapods`
+- Run `git submodule update --init --recursive` to checkout all submodule packages
 - Before compile, run `flutter pub get`
 - flutter intl plugin
     - Helper for localization
@@ -40,3 +41,8 @@ A markdown editor
 - [Architecture](https://bloclibrary.dev/#/architecture)
 
 > Compared to MVVM, BLoC is the ViewModel, who handles the logics
+
+### Modular
+
+> A dependency injection and routes framework
+> [Developer guide](https://modular.flutterando.com.br/docs/flutter_modular/start)
