@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  data:
+    dependency: "direct main"
+    description:
+      path: "packages/data"
+      relative: true
+    source: path
+    version: "0.0.1"
   drift:
     dependency: transitive
     description:
@@ -234,7 +241,7 @@ packages:
     source: hosted
     version: "0.17.0"
   joplin_database:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "packages/joplin_database"
       relative: true
@@ -490,6 +497,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.6"
   vector_math:
     dependency: transitive
     description:
