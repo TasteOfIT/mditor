@@ -15,7 +15,7 @@
     "@add": {
         "description": "Add label"
     },
-    "home": "Notes",
+    "home": "Welcome",
     "@home": {
         "description": "Home title"
     },
