@@ -80,10 +80,10 @@ class S {
     );
   }
 
-  /// `Notes`
+  /// `Welcome`
   String get home {
     return Intl.message(
-      'Notes',
+      'Welcome',
       name: 'home',
       desc: 'Home title',
       args: [],

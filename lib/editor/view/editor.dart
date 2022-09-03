@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/app.dart';
+import '../../design/theme.dart';
 import '../../l10n/wording.dart';
+import '../../widgets/app_bar.dart';
 
 class Editor extends StatefulWidget {
   const Editor({Key? key, this.initialText = '', this.onChanged}) : super(key: key);
 
   final String initialText;
   final ValueChanged? onChanged;
-
-  GenerateAppTitle get onGenerateTitle => (context) => S.of(context).add;
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +24,11 @@ class _EditorState extends State<Editor> {
   String get text => _controller.value.text;
 
   void _preview() {
-    Navigator.pushNamed(context, Routes.routeViewer, arguments: Doc(title: 'Preview', content: text));
+    Routes.add(Routes.routeViewer, args: Doc(title: 'Preview', content: text));
+  }
+
+  void _openDrawer() {
+    context.read<AppDrawerCubit>().openDrawer();
   }
 
   @override
@@ -39,32 +44,24 @@ class _EditorState extends State<Editor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.onGenerateTitle(context)),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                onPressed: _preview,
-                icon: const Icon(
-                  Icons.preview,
-                  size: 26.0,
-                ),
-              ),
-            )
-          ],
+      appBar: AppBarBuilder.withDrawer(
+        context,
+        S.of(context).notebooks,
+        _openDrawer,
+        [ActionData(Icons.preview, _preview)],
+      ),
+      body: TextField(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Enter notes',
         ),
-        body: TextField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter notes',
-          ),
-          maxLines: 99999,
-          scrollPadding: const EdgeInsets.all(20.0),
-          keyboardType: TextInputType.multiline,
-          autofocus: true,
-          controller: _controller,
-        ));
+        maxLines: 99999,
+        scrollPadding: const EdgeInsets.all(20.0),
+        keyboardType: TextInputType.multiline,
+        autofocus: true,
+        controller: _controller,
+      ),
+    );
   }
 
   @override

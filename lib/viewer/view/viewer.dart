@@ -3,38 +3,33 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:markdown/markdown.dart' hide Text;
 
 import '../../app/app.dart';
+import '../../widgets/app_bar.dart';
 
-class Viewer extends StatelessWidget {
+class Viewer extends StatefulWidget {
   const Viewer({Key? key, this.title = '', this.content = ''}) : super(key: key);
 
   final String title;
   final String content;
 
   @override
+  State<StatefulWidget> createState() {
+    return _ViewerState();
+  }
+}
+
+class _ViewerState extends State<Viewer> {
+  @override
   Widget build(BuildContext context) {
-    final doc = ModalRoute.of(context)!.settings.arguments as Doc?;
+    final doc = Routes.getData() as Doc?;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(doc == null ? title : doc.title),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.preview,
-                  size: 26.0,
-                ),
-              ),
-            )
-          ],
+      appBar: AppBarBuilder.get(doc == null ? widget.title : doc.title, const []),
+      body: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: HtmlWidget(
+          markdownToHtml(doc == null ? widget.content : doc.content),
+          textStyle: const TextStyle(fontSize: 14),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: HtmlWidget(
-            markdownToHtml(doc == null ? content : doc.content),
-            textStyle: const TextStyle(fontSize: 14),
-          ),
-        ));
+      ),
+    );
   }
 }

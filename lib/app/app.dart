@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../design/locale.dart';
 import '../design/theme.dart';
 import '../l10n/wording.dart';
+import 'app_routes.dart';
 
 export 'app_bloc_observer.dart';
 export 'app_routes.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Modular.setInitialRoute(Routes.routeWelcome);
     return BlocProvider(
       create: (_) => ThemeModeCubit(),
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, themeMode) {

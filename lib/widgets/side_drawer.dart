@@ -1,41 +1,46 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/l10n.dart';
-import '../../widgets/dividers.dart';
-import '../../widgets/menu.dart';
-import '../../widgets/tree/file_tree.dart';
+import '../l10n/wording.dart';
+import '../widgets/dividers.dart';
+import '../widgets/drawer_item.dart';
+import 'tree/file_tree.dart';
 
-class NotesDrawer {
-  static Drawer get(
+class SideDrawerBuilder {
+  static Drawer build(
     BuildContext context,
+    FileTree files,
+    NotebookCallback addNotebook,
+    SettingsCallback onSettingsClick,
   ) {
     return Drawer(
       child: Column(
         children: [
-          Menu(
+          DrawerItem(
             icon: Icons.my_library_books_rounded,
             label: S.of(context).notebooks,
           ),
           Dividers.horizontal(),
           Expanded(
             flex: 1,
-            child: FileTree(
-              emptyMessage: S.of(context).noNotebooks,
-              nodes: const [],
-            ),
+            child: files,
           ),
           Dividers.horizontal(),
-          Menu(
+          DrawerItem(
             icon: Icons.note_add_rounded,
             label: S.of(context).addNotebook,
+            onTap: addNotebook,
           ),
           Dividers.horizontal(),
-          Menu(
+          DrawerItem(
             icon: Icons.settings_applications,
             label: S.of(context).settings,
+            onTap: onSettingsClick,
           )
         ],
       ),
     );
   }
 }
+
+typedef NotebookCallback = VoidCallback;
+typedef SettingsCallback = VoidCallback;
