@@ -129,6 +129,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Start here`
+  String get inputHint {
+    return Intl.message(
+      'Start here',
+      name: 'inputHint',
+      desc: 'Input hint for general editor',
+      args: [],
+    );
+  }
+
+  /// `mditor`
+  String get nameInputHint {
+    return Intl.message(
+      'mditor',
+      name: 'nameInputHint',
+      desc: 'Input hint for name editor',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -24,6 +24,7 @@ class _EditorState extends State<Editor> {
   String get text => _controller.value.text;
 
   void _preview() {
+    // todo: replace Preview with real note title
     Routes.add(Routes.routeViewer, args: Doc(title: 'Preview', content: text));
   }
 
@@ -51,9 +52,9 @@ class _EditorState extends State<Editor> {
         [ActionData(Icons.preview, _preview)],
       ),
       body: TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter notes',
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: S.of(context).inputHint,
         ),
         maxLines: 99999,
         scrollPadding: const EdgeInsets.all(20.0),
