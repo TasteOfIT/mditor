@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_treeview/flutter_treeview.dart';
 
-class FileTreeItem<T extends Node> extends StatelessWidget {
+import 'file.dart';
+
+class FileTreeItem extends StatelessWidget {
   const FileTreeItem({Key? key, required this.node, this.onLeadingPressed, this.onTrailingPressed}) : super(key: key);
 
-  final T node;
+  final FileNode node;
   final VoidCallback? onLeadingPressed;
   final VoidCallback? onTrailingPressed;
 

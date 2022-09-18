@@ -1,52 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
+import 'file.dart';
 import 'file_tree_item.dart';
 
-class FileTree<T extends Node> extends StatefulWidget {
+export 'file.dart';
+export 'file_tree_item.dart';
+
+class FileTree extends StatelessWidget {
   const FileTree({
     Key? key,
-    this.nodes = const [],
+    required this.treeViewController,
+    this.emptyMessage = '',
     this.onNodeTap,
     this.onNodeDoubleTap,
     this.onExpansionChanged,
-    this.emptyMessage = '',
   }) : super(key: key);
 
+  final TreeViewController treeViewController;
   final String? emptyMessage;
-  final List<Node> nodes;
-  final Function(String)? onNodeTap;
-  final Function(String)? onNodeDoubleTap;
-  final Function(String, bool)? onExpansionChanged;
-
-  @override
-  State<StatefulWidget> createState() {
-    return _FileTreeState();
-  }
-}
-
-class _FileTreeState<T extends Node> extends State<FileTree<T>> {
-  TreeViewController _treeViewController = TreeViewController();
-
-  @override
-  void initState() {
-    super.initState();
-    _treeViewController = TreeViewController(children: widget.nodes);
-  }
-
-  void _expand(String key, bool expanded) {
-    final Node? node = _treeViewController.getNode(key);
-    if (node != null) {
-      List<Node> updated = _treeViewController.updateNode(key, node.copyWith(expanded: expanded));
-      setState(() {
-        _treeViewController = _treeViewController.copyWith(children: updated);
-      });
-    }
-  }
+  final Function(TreeViewController, String)? onNodeTap;
+  final Function(TreeViewController, String)? onNodeDoubleTap;
+  final Function(TreeViewController, String, bool)? onExpansionChanged;
 
   Widget _createNode(BuildContext context, Node<dynamic> node) {
     if (node.hasData) {
-      return FileTreeItem(node: node);
+      return FileTreeItem(node: node as FileNode);
     } else {
       return const SizedBox.shrink();
     }
@@ -54,22 +33,23 @@ class _FileTreeState<T extends Node> extends State<FileTree<T>> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.nodes.isNotEmpty) {
+    if (treeViewController.children.isNotEmpty) {
       return TreeView(
-        controller: _treeViewController,
+        controller: treeViewController,
         allowParentSelect: false,
-        onNodeTap: (key) => widget.onNodeTap?.call(key),
-        onNodeDoubleTap: (key) => widget.onNodeDoubleTap?.call(key),
-        onExpansionChanged: (key, expanded) {
-          _expand(key, expanded);
-          widget.onExpansionChanged?.call(key, expanded);
-        },
+        onNodeTap: (key) => onNodeTap?.call(treeViewController, key),
+        onNodeDoubleTap: (key) => onNodeDoubleTap?.call(treeViewController, key),
+        onExpansionChanged: (key, expanded) => onExpansionChanged?.call(treeViewController, key, expanded),
         nodeBuilder: _createNode,
+        theme: TreeViewTheme(
+          expanderTheme: const ExpanderThemeData(type: ExpanderType.none),
+          colorScheme: Theme.of(context).colorScheme,
+        ),
       );
     } else {
       return Center(
         child: Text(
-          widget.emptyMessage ?? '',
+          emptyMessage ?? '',
           style: TextStyle(color: Theme.of(context).hintColor),
         ),
       );
