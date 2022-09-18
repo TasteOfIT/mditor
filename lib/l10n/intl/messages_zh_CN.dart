@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "hello": m0,
         "home": MessageLookupByLibrary.simpleMessage("你好"),
+        "inputHint": MessageLookupByLibrary.simpleMessage("从此开始"),
+        "nameInputHint": MessageLookupByLibrary.simpleMessage("mditor"),
         "noNotebooks": MessageLookupByLibrary.simpleMessage("没有笔记本"),
         "notebooks": MessageLookupByLibrary.simpleMessage("所有笔记本"),
         "settings": MessageLookupByLibrary.simpleMessage("设置")

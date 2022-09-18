@@ -10,7 +10,7 @@ class SideDrawerBuilder {
     BuildContext context,
     FileTree files,
     NotebookCallback addNotebook,
-    SettingsCallback onSettingsClick,
+    SettingsCallback openSettings,
   ) {
     return Drawer(
       child: Column(
@@ -34,7 +34,7 @@ class SideDrawerBuilder {
           DrawerItem(
             icon: Icons.settings_applications,
             label: S.of(context).settings,
-            onTap: onSettingsClick,
+            onTap: openSettings,
           )
         ],
       ),

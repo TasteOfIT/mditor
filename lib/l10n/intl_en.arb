@@ -25,14 +25,22 @@
     },
     "addNotebook": "New notebook",
     "@addNotebook": {
-     "description": "Label of add notebook"
+        "description": "Label of add notebook"
     },
     "noNotebooks": "No notebooks",
     "@noNotebooks": {
-    "description": "Message: no notebooks"
+        "description": "Message: no notebooks"
     },
     "settings": "Settings",
     "@settings": {
         "description": "Label of settings"
+    },
+    "inputHint": "Start here",
+    "@inputHint": {
+        "description": "Input hint for general editor"
+    },
+    "nameInputHint": "mditor",
+    "@nameInputHint": {
+        "description": "Input hint for name editor"
     }
 }

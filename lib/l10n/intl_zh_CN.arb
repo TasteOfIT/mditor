@@ -7,5 +7,7 @@
     "notebooks": "所有笔记本",
     "settings": "设置",
     "addNotebook": "新建笔记本",
-    "noNotebooks": "没有笔记本"
+    "noNotebooks": "没有笔记本",
+    "inputHint": "从此开始",
+    "nameInputHint": "mditor"
 }
