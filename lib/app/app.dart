@@ -9,6 +9,7 @@ import 'app_routes.dart';
 
 export 'app_bloc_observer.dart';
 export 'app_routes.dart';
+export 'log.dart';
 export 'models/doc.dart';
 
 class MyApp extends StatelessWidget {

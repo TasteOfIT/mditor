@@ -66,6 +66,7 @@ class ViewDialogs {
             ),
             autofocus: true,
             keyboardType: TextInputType.name,
+            maxLength: 24,
           ),
           actions: <Widget>[
             TextButton(

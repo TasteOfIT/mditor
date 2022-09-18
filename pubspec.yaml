@@ -33,6 +33,7 @@ dependencies:
 
   # Bloc - state management
   bloc: ^8.1.0
+  bloc_concurrency: ^0.2.0
   flutter_bloc: ^8.1.1
   hydrated_bloc: ^8.1.0
   equatable: ^2.0.5
@@ -40,6 +41,7 @@ dependencies:
   # For file management
   path_provider: ^2.0.11
   flutter_treeview: ^1.0.7+1
+  json_annotation: ^4.7.0
 
   # Documents
   flutter_widget_from_html_core: ^0.8.5+3
@@ -50,6 +52,8 @@ dependencies:
   modular_bloc_bind: ^1.0.1
 
   # Data source
+  joplin_database:
+    path: packages/joplin_database
   data:
     path: packages/data
 
@@ -61,6 +65,10 @@ dev_dependencies:
 
   # launcher icons
   icons_launcher: ^1.1.8
+
+  # file tree view
+  build_runner: ^2.2.1
+  json_serializable: ^6.4.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
