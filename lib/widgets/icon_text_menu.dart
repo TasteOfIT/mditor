@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DrawerItem extends StatelessWidget {
-  const DrawerItem({
+class IconTextMenu extends StatelessWidget {
+  const IconTextMenu({
     Key? key,
     required this.label,
     required this.icon,
