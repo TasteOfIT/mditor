@@ -7,9 +7,9 @@ import '../../app/app.dart';
 import '../../design/theme.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/view_dialogs.dart';
-import '../cubit/file_list_bloc.dart';
+import '../bloc/file_list_bloc.dart';
 import 'file_manager.dart';
-import 'side_drawer.dart';
+import 'side_bar_menu.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,17 +44,23 @@ class _HomeState extends State<Home> {
           create: (context) => notebookRepository,
         ),
       ],
-      child: Scaffold(
-        drawer: SideDrawer(
-          fileTree: BlocProvider(
-            create: (context) => fileListBloc,
-            child: const FileManager(),
-          ),
+      child: BlocProvider(
+        create: (_) => fileListBloc,
+        child: _mainContent(context),
+      ),
+    );
+  }
+
+  Widget _mainContent(BuildContext context) {
+    return Scaffold(
+      drawer: Drawer(
+        child: SideBarMenu(
+          fileTree: const FileManager(),
           addNotebook: () => _addNotebook(fileListBloc),
           openSettings: () => {},
         ),
-        body: _routeContainer(context),
       ),
+      body: _routeContainer(context),
     );
   }
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_treeview/flutter_treeview.dart';
 
 import '../../l10n/wording.dart';
 import '../../widgets/tree/file_tree.dart';
-import '../cubit/file_list_bloc.dart';
+import '../bloc/file_list_bloc.dart';
 
 class FileManager extends StatefulWidget {
   const FileManager({super.key});
@@ -14,15 +13,7 @@ class FileManager extends StatefulWidget {
 }
 
 class _FileManagerState extends State<FileManager> {
-  void _expand(TreeViewController treeViewController, String key, bool expanded) {
-    final Node? node = treeViewController.getNode(key);
-    if (node != null) {
-      List<Node> updated = treeViewController.updateNode(key, node.copyWith(expanded: expanded));
-      setState(() {
-        treeViewController = treeViewController.copyWith(children: updated);
-      });
-    }
-  }
+  final FileTreeCubit _fileTreeCubit = FileTreeCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +22,34 @@ class _FileManagerState extends State<FileManager> {
       if (state is FileListData) {
         files = state.nodes;
       }
-      return FileTree(
-        treeViewController: TreeViewController(children: files),
-        emptyMessage: S.of(context).noNotebooks,
-        onExpansionChanged: _expand,
-      );
+      if (files.isNotEmpty) {
+        return BlocProvider(
+          create: (_) => _fileTreeCubit,
+          child: BlocListener<FileListBloc, FileListState>(
+            listener: (context, state) {
+              if (state is FileListData) {
+                _fileTreeCubit.update(state.nodes);
+              }
+            },
+            child: FileTree(
+              initialNodes: files,
+            ),
+          ),
+        );
+      } else {
+        return Center(
+          child: Text(
+            S.of(context).noNotebooks,
+            style: TextStyle(color: Theme.of(context).hintColor),
+          ),
+        );
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _fileTreeCubit.close();
+    super.dispose();
   }
 }
