@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../app/app.dart';
 import '../../design/theme.dart';
-import '../../l10n/wording.dart';
-import '../../widgets/view_dialogs.dart';
 import '../bloc/file_list_bloc.dart';
 import 'file_manager.dart';
 import 'side_bar_menu.dart';
@@ -30,12 +27,6 @@ class _HomeState extends State<Home> {
     fileListBloc.add(FileListRefresh());
   }
 
-  Future<void> _addNotebook(FileListBloc fileListBloc) async {
-    String name = await ViewDialogs.editorDialog(context, S.of(context).addNotebook);
-    int result = await notebookRepository.addNotebook(name);
-    Log.d('Insert $result');
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -53,21 +44,15 @@ class _HomeState extends State<Home> {
 
   Widget _mainContent(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer: const Drawer(
         child: SideBarMenu(
-          fileTree: const FileManager(),
-          addNotebook: () => _addNotebook(fileListBloc),
-          openSettings: () => {},
+          fileTree: FileManager(),
         ),
       ),
-      body: _routeContainer(context),
-    );
-  }
-
-  Widget _routeContainer(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppDrawerCubit(Scaffold.of(context)),
-      child: const RouterOutlet(),
+      body: BlocProvider(
+        create: (context) => AppDrawerCubit(Scaffold.of(context)),
+        child: const RouterOutlet(),
+      ),
     );
   }
 
