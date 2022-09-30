@@ -20,19 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(name) => "Hello, ${name}";
+  static String m0(name) => "Do you want to delete \"${name}\"?";
+
+  static String m1(name) => "Hello, ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addNote": MessageLookupByLibrary.simpleMessage("New note"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("New notebook"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
-        "hello": m0,
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteConfirmMessage": m0,
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "hello": m1,
         "home": MessageLookupByLibrary.simpleMessage("Welcome"),
         "inputHint": MessageLookupByLibrary.simpleMessage("Start here"),
+        "moveTo": MessageLookupByLibrary.simpleMessage("Move to notebook"),
         "nameInputHint": MessageLookupByLibrary.simpleMessage("mditor"),
         "noNotebooks": MessageLookupByLibrary.simpleMessage("No notebooks"),
         "notebooks": MessageLookupByLibrary.simpleMessage("Notebooks"),
+        "rename": MessageLookupByLibrary.simpleMessage("Rename"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings")
       };
 }

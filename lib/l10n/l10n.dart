@@ -70,12 +70,12 @@ class S {
     );
   }
 
-  /// `Add`
-  String get add {
+  /// `New note`
+  String get addNote {
     return Intl.message(
-      'Add',
-      name: 'add',
-      desc: 'Add label',
+      'New note',
+      name: 'addNote',
+      desc: 'Add note label',
       args: [],
     );
   }
@@ -106,6 +106,56 @@ class S {
       'New notebook',
       name: 'addNotebook',
       desc: 'Label of add notebook',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: 'Label of delete',
+      args: [],
+    );
+  }
+
+  /// `Do you want to delete "{name}"?`
+  String deleteConfirmMessage(Object name) {
+    return Intl.message(
+      'Do you want to delete "$name"?',
+      name: 'deleteConfirmMessage',
+      desc: 'Confirm message of delete',
+      args: [name],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: 'Label of rename',
+      args: [],
+    );
+  }
+
+  /// `Rename`
+  String get rename {
+    return Intl.message(
+      'Rename',
+      name: 'rename',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Move to notebook`
+  String get moveTo {
+    return Intl.message(
+      'Move to notebook',
+      name: 'moveTo',
+      desc: 'Label of moveTo',
       args: [],
     );
   }
