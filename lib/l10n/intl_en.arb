@@ -11,9 +11,9 @@
             "name": {}
         }
     },
-    "add": "Add",
-    "@add": {
-        "description": "Add label"
+    "addNote": "New note",
+    "@addNote": {
+        "description": "Add note label"
     },
     "home": "Welcome",
     "@home": {
@@ -26,6 +26,29 @@
     "addNotebook": "New notebook",
     "@addNotebook": {
         "description": "Label of add notebook"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Label of delete"
+    },
+    "deleteConfirmMessage": "Do you want to delete \"{name}\"?",
+    "@deleteConfirmMessage": {
+        "description": "Confirm message of delete",
+        "placeholders": {
+            "name": {}
+        }
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "Label of edit"
+    },
+    "rename": "Rename",
+    "@edit": {
+        "description": "Label of rename"
+    },
+    "moveTo": "Move to notebook",
+    "@moveTo": {
+        "description": "Label of moveTo"
     },
     "noNotebooks": "No notebooks",
     "@noNotebooks": {

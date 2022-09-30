@@ -13,6 +13,7 @@ class File {
     this.updatedTime,
     this.parentId,
     this.icon,
+    this.isLeaf,
   );
 
   final String? id;
@@ -21,6 +22,7 @@ class File {
   final int updatedTime;
   final String parentId;
   final String icon;
+  final bool isLeaf;
 
   static File fromNotebook(Notebook notebook) {
     return File(
@@ -30,6 +32,7 @@ class File {
       notebook.updatedTime,
       notebook.parentId,
       notebook.icon,
+      false,
     );
   }
 
@@ -41,6 +44,7 @@ class File {
       noteItem.updatedTime,
       noteItem.parentId,
       '',
+      true,
     );
   }
 

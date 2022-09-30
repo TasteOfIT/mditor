@@ -44,7 +44,7 @@ class _WelcomeState extends State<Welcome> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _newNote,
-        tooltip: S.of(context).add,
+        tooltip: S.of(context).addNote,
         child: const Icon(Icons.add),
       ),
     );

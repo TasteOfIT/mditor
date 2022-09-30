@@ -17,12 +17,20 @@ class FileTree extends StatefulWidget {
     this.onNodeDoubleTap,
     this.onExpansionChanged,
     this.initialNodes = const [],
+    this.notebookOptions = const [],
+    this.notebookOptionSelected,
+    this.noteOptions = const [],
+    this.noteOptionSelected,
   }) : super(key: key);
 
-  final List<Node> initialNodes;
+  final List<FileNode> initialNodes;
   final Function(TreeViewController, String)? onNodeTap;
   final Function(TreeViewController, String)? onNodeDoubleTap;
   final Function(TreeViewController, String, bool)? onExpansionChanged;
+  final List<MenuData> notebookOptions;
+  final void Function(int, File)? notebookOptionSelected;
+  final List<MenuData> noteOptions;
+  final void Function(int, File)? noteOptionSelected;
 
   @override
   State<StatefulWidget> createState() {
@@ -40,8 +48,20 @@ class _FileTreeState extends State<FileTree> {
   }
 
   Widget _createNode(BuildContext context, Node<dynamic> node) {
-    if (node.hasData) {
-      return FileTreeItem(node: node as FileNode);
+    if (node is FileNode) {
+      if ((node.data as File).isLeaf) {
+        return FileTreeItem(
+          node: node,
+          optionMenu: widget.noteOptions,
+          optionSelected: widget.noteOptionSelected,
+        );
+      } else {
+        return FileTreeItem(
+          node: node,
+          optionMenu: widget.notebookOptions,
+          optionSelected: widget.notebookOptionSelected,
+        );
+      }
     } else {
       return const SizedBox.shrink();
     }
