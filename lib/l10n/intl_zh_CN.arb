@@ -7,6 +7,7 @@
     "notebooks": "所有笔记本",
     "settings": "设置",
     "addNotebook": "新建笔记本",
+    "editNotebook": "编辑笔记本",
     "delete": "删除",
     "deleteConfirmMessage": "确定要删除\"{name}\"?",
     "edit": "编辑",
@@ -14,5 +15,5 @@
     "moveTo": "移动到笔记本",
     "noNotebooks": "没有笔记本",
     "inputHint": "从此开始",
-    "nameInputHint": "mditor"
+    "nameInputHint": "未命名笔记本"
 }

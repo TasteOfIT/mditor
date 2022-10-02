@@ -110,6 +110,16 @@ class S {
     );
   }
 
+  /// `Edit notebook`
+  String get editNotebook {
+    return Intl.message(
+      'Edit notebook',
+      name: 'editNotebook',
+      desc: 'Label of edit notebook',
+      args: [],
+    );
+  }
+
   /// `Delete`
   String get delete {
     return Intl.message(
@@ -190,10 +200,10 @@ class S {
     );
   }
 
-  /// `mditor`
+  /// `Untitled notebook`
   String get nameInputHint {
     return Intl.message(
-      'mditor',
+      'Untitled notebook',
       name: 'nameInputHint',
       desc: 'Input hint for name editor',
       args: [],
