@@ -27,6 +27,10 @@
     "@addNotebook": {
         "description": "Label of add notebook"
     },
+    "editNotebook": "Edit notebook",
+    "@editNotebook": {
+        "description": "Label of edit notebook"
+    },
     "delete": "Delete",
     "@delete": {
         "description": "Label of delete"
@@ -62,7 +66,7 @@
     "@inputHint": {
         "description": "Input hint for general editor"
     },
-    "nameInputHint": "mditor",
+    "nameInputHint": "Untitled notebook",
     "@nameInputHint": {
         "description": "Input hint for name editor"
     }

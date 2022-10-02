@@ -44,6 +44,7 @@ class ViewDialogs {
     BuildContext context,
     String title, {
     String editorHint = '',
+    String initialText = '',
     bool barrierDismissible = true,
     bool useRootNavigator = true,
   }) async {
@@ -53,6 +54,7 @@ class ViewDialogs {
       useRootNavigator: useRootNavigator,
       builder: (BuildContext context) {
         TextEditingController controller = TextEditingController();
+        controller.text = initialText;
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

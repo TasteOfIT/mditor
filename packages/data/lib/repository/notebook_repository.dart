@@ -13,10 +13,20 @@ class NotebookRepository extends LocalDataSource {
     });
   }
 
-  Future<int> addNotebook(String title) {
+  Future<int> addNotebook(String title, String? parentId) {
     int currentTime = DateUtils.currentTimestamp();
-    Notebook notebook = Notebook(title: title, createdTime: currentTime, updatedTime: currentTime);
+    Notebook notebook = Notebook(
+      title: title,
+      parentId: parentId ?? '',
+      createdTime: currentTime,
+      updatedTime: currentTime,
+    );
     return database.folderDao.addFolder(notebook.to());
+  }
+
+  Future<int> updateNotebook(String id, String title) {
+    int currentTime = DateUtils.currentTimestamp();
+    return database.folderDao.updateFolder(title, currentTime, currentTime, id);
   }
 
   Future<int> removeNotebook(String id) {

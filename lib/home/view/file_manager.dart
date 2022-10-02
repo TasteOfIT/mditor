@@ -27,11 +27,28 @@ class _FileManagerState extends State<FileManager> {
     _notebookRepository = RepositoryProvider.of<NotebookRepository>(context);
   }
 
-  Future<void> _addNotebook() async {
-    String name = await ViewDialogs.editorDialog(context, S.of(context).addNotebook);
+  Future<void> _addNotebook({String? parentId = ''}) async {
+    String name = await ViewDialogs.editorDialog(
+      context,
+      S.of(context).addNotebook,
+      editorHint: S.of(context).nameInputHint,
+    );
     if (name.trim().isNotEmpty) {
-      int result = await _notebookRepository.addNotebook(name.trim());
-      Log.d('Insert $result');
+      int result = await _notebookRepository.addNotebook(name.trim(), parentId);
+      Log.d('Insert notebook $result');
+    }
+  }
+
+  Future<void> _updateNotebook(File file) async {
+    String name = await ViewDialogs.editorDialog(
+      context,
+      S.of(context).editNotebook,
+      editorHint: S.of(context).nameInputHint,
+      initialText: file.label,
+    );
+    if (name.trim().isNotEmpty && name.trim() != file.label.trim()) {
+      int result = await _notebookRepository.updateNotebook(file.id ?? '', name.trim());
+      Log.d('Update notebook $result');
     }
   }
 
@@ -44,7 +61,7 @@ class _FileManagerState extends State<FileManager> {
     if (result == ViewDialogsAction.yes) {
       // todo: delete all children
       int result = await _notebookRepository.removeNotebook(file.id ?? '');
-      Log.d('Delete $result');
+      Log.d('Delete notebook $result');
     }
   }
 
@@ -119,11 +136,12 @@ class _FileManagerState extends State<FileManager> {
         }
       case 1:
         {
-          _addNotebook();
+          _addNotebook(parentId: file.id);
           break;
         }
       case 2:
         {
+          _updateNotebook(file);
           break;
         }
       case 3:
