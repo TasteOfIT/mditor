@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../design/theme.dart';
 import '../bloc/file_list_bloc.dart';
+import '../bloc/working_cubit.dart';
 import 'file_manager.dart';
 import 'side_bar_menu.dart';
 
@@ -16,15 +17,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late FileListBloc fileListBloc;
-  late NotebookRepository notebookRepository;
+  late FileListBloc _fileListBloc;
+  late WorkingCubit _workingCubit;
+  late NotebookRepository _notebookRepository;
+  late NoteRepository _noteRepository;
 
   @override
   void initState() {
     super.initState();
-    notebookRepository = Modular.get<NotebookRepository>();
-    fileListBloc = FileListBloc(notebookRepository);
-    fileListBloc.add(FileListRefresh());
+    _notebookRepository = Modular.get<NotebookRepository>();
+    _noteRepository = Modular.get<NoteRepository>();
+    _workingCubit = WorkingCubit();
+    _fileListBloc = FileListBloc(_notebookRepository, _noteRepository);
+    _fileListBloc.add(FileListRefresh());
   }
 
   @override
@@ -32,11 +37,17 @@ class _HomeState extends State<Home> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<NotebookRepository>(
-          create: (context) => notebookRepository,
+          create: (_) => _notebookRepository,
+        ),
+        RepositoryProvider<NoteRepository>(
+          create: (_) => _noteRepository,
         ),
       ],
-      child: BlocProvider(
-        create: (_) => fileListBloc,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => _fileListBloc),
+          BlocProvider(create: (_) => _workingCubit),
+        ],
         child: _mainContent(context),
       ),
     );
@@ -58,7 +69,8 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    fileListBloc.close();
+    _workingCubit.close();
+    _fileListBloc.close();
     super.dispose();
   }
 }

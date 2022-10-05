@@ -15,10 +15,15 @@ part 'file_list_state.dart';
 
 class FileListBloc extends Bloc<FileListEvent, FileListState> {
   final NotebookRepository _notebookRepo;
+  final NoteRepository _noteRepo;
 
   StreamSubscription<List<Notebook>>? _notebooksSubscription;
+  StreamSubscription<List<NoteItem>>? _notesSubscription;
 
-  FileListBloc(this._notebookRepo) : super(FileListData(List.empty())) {
+  List<Notebook>? _latestNotebooks;
+  List<NoteItem>? _latestNotes;
+
+  FileListBloc(this._notebookRepo, this._noteRepo) : super(FileListData(List.empty(), List.empty())) {
     on<FileListRefresh>(_onRefresh, transformer: restartable());
     on<FileListLoaded>(_onLoaded);
   }
@@ -28,9 +33,17 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
     _notebooksSubscription?.cancel();
     _notebooksSubscription = _notebookRepo.getNotebooks().listen(
       (data) {
-        List<Notebook> notebooks = data;
-        Log.d('New data $notebooks');
-        add(FileListLoaded(notebooks));
+        _latestNotebooks = data;
+        Log.d('Notebooks changed ${_latestNotebooks?.length ?? -1}');
+        if (_latestNotes != null) add(FileListLoaded(data, _latestNotes ?? List.empty()));
+      },
+    );
+    _notesSubscription?.cancel();
+    _notesSubscription = _noteRepo.getNotes().listen(
+      (data) {
+        _latestNotes = data;
+        Log.d('Notes changed ${_latestNotes?.length ?? -1}');
+        if (_latestNotebooks != null) add(FileListLoaded(_latestNotebooks ?? List.empty(), data));
       },
     );
   }
@@ -42,6 +55,6 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
   }
 
   void _onLoaded(FileListLoaded event, Emitter<FileListState> emit) {
-    emit(FileListData(NodeMapper.of(event.notebooks, List.empty())));
+    emit(FileListData(NodeMapper.fromNotebooks(event.notebooks), NodeMapper.fromItems(event.notes)));
   }
 }

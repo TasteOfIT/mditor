@@ -1,19 +1,20 @@
 import 'package:data/data.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'file.g.dart';
 
 @JsonSerializable()
-class File {
-  File(
+class File extends Equatable {
+  const File(
     this.id,
     this.label,
     this.createdTime,
     this.updatedTime,
     this.parentId,
     this.icon,
-    this.isLeaf,
+    this.isFolder,
   );
 
   final String? id;
@@ -22,7 +23,7 @@ class File {
   final int updatedTime;
   final String parentId;
   final String icon;
-  final bool isLeaf;
+  final bool isFolder;
 
   static File fromNotebook(Notebook notebook) {
     return File(
@@ -32,7 +33,7 @@ class File {
       notebook.updatedTime,
       notebook.parentId,
       notebook.icon,
-      false,
+      true,
     );
   }
 
@@ -44,7 +45,7 @@ class File {
       noteItem.updatedTime,
       noteItem.parentId,
       '',
-      true,
+      false,
     );
   }
 
@@ -52,6 +53,9 @@ class File {
   Map<String, dynamic> toJson() {
     return _$FileToJson(this);
   }
+
+  @override
+  List<Object?> get props => [id, label, updatedTime, parentId, icon];
 }
 
 typedef FileNode = Node<File>;

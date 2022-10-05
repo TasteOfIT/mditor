@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `Open drawer on left side and select a notebook`
+  String get addNotebookHint {
+    return Intl.message(
+      'Open drawer on left side and select a notebook',
+      name: 'addNotebookHint',
+      desc: 'A help message to create notebook',
+      args: [],
+    );
+  }
+
   /// `New note`
   String get addNote {
     return Intl.message(
@@ -145,7 +155,7 @@ class S {
     return Intl.message(
       'Edit',
       name: 'edit',
-      desc: 'Label of rename',
+      desc: 'Label of edit',
       args: [],
     );
   }
@@ -155,7 +165,17 @@ class S {
     return Intl.message(
       'Rename',
       name: 'rename',
-      desc: '',
+      desc: 'Label of rename',
+      args: [],
+    );
+  }
+
+  /// `Rename note`
+  String get renameNote {
+    return Intl.message(
+      'Rename note',
+      name: 'renameNote',
+      desc: 'Label of rename note',
       args: [],
     );
   }
@@ -200,10 +220,10 @@ class S {
     );
   }
 
-  /// `Untitled notebook`
+  /// `Untitled`
   String get nameInputHint {
     return Intl.message(
-      'Untitled notebook',
+      'Untitled',
       name: 'nameInputHint',
       desc: 'Input hint for name editor',
       args: [],

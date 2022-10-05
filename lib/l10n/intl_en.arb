@@ -11,6 +11,10 @@
             "name": {}
         }
     },
+    "addNotebookHint": "Open drawer on left side and select a notebook",
+    "@addNotebookHint": {
+        "description": "A help message to create notebook"
+    },
     "addNote": "New note",
     "@addNote": {
         "description": "Add note label"
@@ -47,8 +51,12 @@
         "description": "Label of edit"
     },
     "rename": "Rename",
-    "@edit": {
+    "@rename": {
         "description": "Label of rename"
+    },
+    "renameNote": "Rename note",
+    "@renameNote": {
+        "description": "Label of rename note"
     },
     "moveTo": "Move to notebook",
     "@moveTo": {
@@ -66,7 +74,7 @@
     "@inputHint": {
         "description": "Input hint for general editor"
     },
-    "nameInputHint": "Untitled notebook",
+    "nameInputHint": "Untitled",
     "@nameInputHint": {
         "description": "Input hint for name editor"
     }

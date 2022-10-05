@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("New note"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("New notebook"),
+        "addNotebookHint": MessageLookupByLibrary.simpleMessage(
+            "Open drawer on left side and select a notebook"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteConfirmMessage": m0,
@@ -37,11 +39,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Welcome"),
         "inputHint": MessageLookupByLibrary.simpleMessage("Start here"),
         "moveTo": MessageLookupByLibrary.simpleMessage("Move to notebook"),
-        "nameInputHint":
-            MessageLookupByLibrary.simpleMessage("Untitled notebook"),
+        "nameInputHint": MessageLookupByLibrary.simpleMessage("Untitled"),
         "noNotebooks": MessageLookupByLibrary.simpleMessage("No notebooks"),
         "notebooks": MessageLookupByLibrary.simpleMessage("Notebooks"),
         "rename": MessageLookupByLibrary.simpleMessage("Rename"),
+        "renameNote": MessageLookupByLibrary.simpleMessage("Rename note"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings")
       };
 }

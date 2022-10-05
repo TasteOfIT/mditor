@@ -13,7 +13,7 @@ File _$FileFromJson(Map<String, dynamic> json) => File(
       json['updatedTime'] as int,
       json['parentId'] as String,
       json['icon'] as String,
-      json['isLeaf'] as bool,
+      json['isFolder'] as bool,
     );
 
 Map<String, dynamic> _$FileToJson(File instance) => <String, dynamic>{
@@ -23,5 +23,5 @@ Map<String, dynamic> _$FileToJson(File instance) => <String, dynamic>{
       'updatedTime': instance.updatedTime,
       'parentId': instance.parentId,
       'icon': instance.icon,
-      'isLeaf': instance.isLeaf,
+      'isFolder': instance.isFolder,
     };

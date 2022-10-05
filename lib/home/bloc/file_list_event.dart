@@ -11,9 +11,10 @@ class FileListRefresh extends FileListEvent {
 
 class FileListLoaded extends FileListEvent {
   final List<Notebook> notebooks;
+  final List<NoteItem> notes;
 
-  const FileListLoaded(this.notebooks);
+  const FileListLoaded(this.notebooks, this.notes);
 
   @override
-  List<Object?> get props => [notebooks];
+  List<Object?> get props => [notebooks, notes];
 }

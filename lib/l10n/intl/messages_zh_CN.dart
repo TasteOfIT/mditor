@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("新建笔记"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("新建笔记本"),
+        "addNotebookHint":
+            MessageLookupByLibrary.simpleMessage("打开左侧菜单创建选择一个笔记本"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteConfirmMessage": m0,
@@ -41,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noNotebooks": MessageLookupByLibrary.simpleMessage("没有笔记本"),
         "notebooks": MessageLookupByLibrary.simpleMessage("所有笔记本"),
         "rename": MessageLookupByLibrary.simpleMessage("重命名"),
+        "renameNote": MessageLookupByLibrary.simpleMessage("重命名笔记"),
         "settings": MessageLookupByLibrary.simpleMessage("设置")
       };
 }

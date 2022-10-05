@@ -26,7 +26,12 @@ class NotebookRepository extends LocalDataSource {
 
   Future<int> updateNotebook(String id, String title) {
     int currentTime = DateUtils.currentTimestamp();
-    return database.folderDao.updateFolder(title, currentTime, currentTime, id);
+    return database.folderDao.editFolder(id, title, currentTime);
+  }
+
+  Future<int> moveNotebook(String id, String parentId) {
+    int currentTime = DateUtils.currentTimestamp();
+    return database.folderDao.moveToFolder(id, parentId, currentTime);
   }
 
   Future<int> removeNotebook(String id) {
