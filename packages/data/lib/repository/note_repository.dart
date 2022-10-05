@@ -13,7 +13,7 @@ class NoteRepository extends LocalDataSource {
     });
   }
 
-  Future<int> addNote(String parentId, String title, String body) {
+  Future<String> addNote(String parentId, String title, String body) {
     int currentTime = DateUtils.currentTimestamp();
     final noteItem = NoteItem(
       parentId: parentId,
@@ -24,6 +24,21 @@ class NoteRepository extends LocalDataSource {
       markupLanguage: MarkupLanguage.markdown,
     );
     return database.noteDao.addNote(noteItem.to());
+  }
+
+  Future<int> updateTitle(String id, String title) {
+    int currentTime = DateUtils.currentTimestamp();
+    return database.noteDao.editTitle(id, title, currentTime);
+  }
+
+  Future<int> updateContent(String id, String body) {
+    int currentTime = DateUtils.currentTimestamp();
+    return database.noteDao.editContent(id, body, currentTime);
+  }
+
+  Future<int> moveNote(String id, String parentId) {
+    int currentTime = DateUtils.currentTimestamp();
+    return database.noteDao.moveToFolder(id, parentId, currentTime);
   }
 
   Future<int> removeNote(String id) {

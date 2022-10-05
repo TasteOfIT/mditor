@@ -5,12 +5,13 @@ abstract class FileListState extends Equatable {
 }
 
 class FileListData extends FileListState {
-  final List<FileNode> nodes;
+  final List<File> notebooks;
+  final List<File> notes;
 
-  const FileListData(this.nodes);
+  const FileListData(this.notebooks, this.notes);
 
   @override
-  List<Object> get props => [nodes];
+  List<Object> get props => [notebooks, notes];
 }
 
 class FileListLoading extends FileListState {

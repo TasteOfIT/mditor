@@ -21,6 +21,7 @@ class FileTree extends StatefulWidget {
     this.notebookOptionSelected,
     this.noteOptions = const [],
     this.noteOptionSelected,
+    this.supportParentDoubleTap = false,
   }) : super(key: key);
 
   final List<FileNode> initialNodes;
@@ -31,6 +32,7 @@ class FileTree extends StatefulWidget {
   final void Function(int, File)? notebookOptionSelected;
   final List<MenuData> noteOptions;
   final void Function(int, File)? noteOptionSelected;
+  final bool supportParentDoubleTap;
 
   @override
   State<StatefulWidget> createState() {
@@ -49,17 +51,17 @@ class _FileTreeState extends State<FileTree> {
 
   Widget _createNode(BuildContext context, Node<dynamic> node) {
     if (node is FileNode) {
-      if ((node.data as File).isLeaf) {
-        return FileTreeItem(
-          node: node,
-          optionMenu: widget.noteOptions,
-          optionSelected: widget.noteOptionSelected,
-        );
-      } else {
+      if ((node.data as File).isFolder) {
         return FileTreeItem(
           node: node,
           optionMenu: widget.notebookOptions,
           optionSelected: widget.notebookOptionSelected,
+        );
+      } else {
+        return FileTreeItem(
+          node: node,
+          optionMenu: widget.noteOptions,
+          optionSelected: widget.noteOptionSelected,
         );
       }
     } else {
@@ -77,6 +79,13 @@ class _FileTreeState extends State<FileTree> {
     }
   }
 
+  void _toggle(String key) {
+    final Node? node = _treeViewController.getNode(key);
+    if (node != null && node.isParent) {
+      _expand(key, !node.expanded);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<FileTreeCubit, List<FileNode>>(
@@ -89,15 +98,23 @@ class _FileTreeState extends State<FileTree> {
       child: TreeView(
         controller: _treeViewController,
         allowParentSelect: false,
+        supportParentDoubleTap: widget.supportParentDoubleTap,
         onNodeTap: (key) => widget.onNodeTap?.call(_treeViewController, key),
-        onNodeDoubleTap: (key) => widget.onNodeDoubleTap?.call(_treeViewController, key),
+        onNodeDoubleTap: (key) {
+          if (widget.supportParentDoubleTap) _toggle(key);
+          widget.onNodeDoubleTap?.call(_treeViewController, key);
+        },
         onExpansionChanged: (key, expanded) {
           _expand(key, expanded);
           widget.onExpansionChanged?.call(_treeViewController, key, expanded);
         },
         nodeBuilder: _createNode,
         theme: TreeViewTheme(
-          expanderTheme: const ExpanderThemeData(type: ExpanderType.none),
+          expanderTheme: const ExpanderThemeData(
+            type: ExpanderType.chevron,
+            modifier: ExpanderModifier.circleOutlined,
+            size: 24,
+          ),
           colorScheme: Theme.of(context).colorScheme,
         ),
       ),

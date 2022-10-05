@@ -19,7 +19,7 @@ class FileTreeItem<File> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 6, right: 12),
+      padding: const EdgeInsets.only(right: 12),
       child: Row(
         children: [
           _leadingIcon(context),
@@ -42,23 +42,21 @@ class FileTreeItem<File> extends StatelessWidget {
   }
 
   Widget _leadingIcon(BuildContext context) {
-    IconData leading = Icons.lightbulb_circle_rounded;
+    IconData leading = Icons.sticky_note_2_rounded;
     if (node.isParent) {
       if (node.expanded) {
-        leading = Icons.arrow_circle_up_rounded;
+        leading = Icons.folder_open_rounded;
       } else {
-        leading = Icons.arrow_circle_down_rounded;
+        leading = Icons.snippet_folder_rounded;
       }
     }
     return Center(
-        widthFactor: 2.0,
-        child: Padding(
-          padding: EdgeInsets.only(left: node.isParent ? 0 : 1), // Workaround for flutter_treeview to align icons
-          child: Icon(
-            leading,
-            size: 20,
-          ),
-        ));
+      widthFactor: 2.0,
+      child: Icon(
+        leading,
+        size: 20,
+      ),
+    );
   }
 
   Widget _trailingIcon(BuildContext context) {

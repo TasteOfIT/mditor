@@ -6,7 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'app/app.dart';
 import 'app/app_module.dart';
-import 'data/storage.dart';
+import 'app/storage.dart';
 
 void main() async {
   FlutterError.onError = (details) {

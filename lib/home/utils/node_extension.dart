@@ -10,7 +10,7 @@ Comparator<FileNode> nodeComparator = (left, right) {
 };
 
 class NodeMapper {
-  static List<FileNode> of(List<Notebook> notebooks, List<NoteItem> notes) {
+  static List<FileNode> of(List<File> notebooks, List<File> notes) {
     List<FileNode> allNodes = _fromNotebooks(notebooks) + _fromItems(notes);
     allNodes.sort(nodeComparator);
 
@@ -24,23 +24,23 @@ class NodeMapper {
     return result;
   }
 
-  static List<FileNode> _fromItems(List<NoteItem> noteItems) {
+  static List<FileNode> _fromItems(List<File> noteItems) {
     return noteItems.map((noteItem) {
       return Node(
         key: noteItem.id ?? '',
-        label: noteItem.title,
-        data: File.fromNoteItem(noteItem),
+        label: noteItem.label,
+        data: noteItem,
       );
     }).toList(growable: false);
   }
 
-  static List<FileNode> _fromNotebooks(List<Notebook> notebooks) {
+  static List<FileNode> _fromNotebooks(List<File> notebooks) {
     return notebooks.map((notebook) {
       return Node(
         key: notebook.id ?? '',
-        label: notebook.title,
+        label: notebook.label,
         parent: true,
-        data: File.fromNotebook(notebook),
+        data: notebook,
       );
     }).toList(growable: false);
   }
@@ -73,5 +73,13 @@ class NodeMapper {
         return node;
       }
     }).toList();
+  }
+
+  static List<File> fromItems(List<NoteItem> noteItems) {
+    return noteItems.map(File.fromNoteItem).toList(growable: false);
+  }
+
+  static List<File> fromNotebooks(List<Notebook> notebooks) {
+    return notebooks.map(File.fromNotebook).toList(growable: false);
   }
 }
