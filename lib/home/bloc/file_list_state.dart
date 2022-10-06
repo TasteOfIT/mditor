@@ -4,25 +4,60 @@ abstract class FileListState extends Equatable {
   const FileListState();
 }
 
-class FileListData extends FileListState {
+class FileListLoaded extends FileListState {
   final List<File> notebooks;
   final List<File> notes;
 
-  const FileListData(this.notebooks, this.notes);
+  const FileListLoaded(this.notebooks, this.notes);
 
   @override
   List<Object> get props => [notebooks, notes];
 }
 
-class FileListLoading extends FileListState {
-  @override
-  List<Object?> get props => [];
-}
-
-class FileListError extends FileListState {
+//todo: add error handling
+class FileLoadError extends FileListState {
   final String message;
 
-  const FileListError(this.message);
+  const FileLoadError(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class FileAdded extends FileListState {
+  final String? parentId;
+  final FileNode file;
+
+  const FileAdded(this.file, {this.parentId});
+
+  @override
+  List<Object?> get props => [file.data, parentId];
+}
+
+class FileChanged extends FileListState {
+  final String id;
+  final FileNode file;
+
+  const FileChanged(this.id, this.file);
+
+  @override
+  List<Object?> get props => [file.data, id];
+}
+
+class FileDeleted extends FileListState {
+  final String id;
+
+  const FileDeleted(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}
+
+//todo: add error handling
+class FileOpError extends FileListState {
+  final String message;
+
+  const FileOpError(this.message);
 
   @override
   List<Object?> get props => [message];

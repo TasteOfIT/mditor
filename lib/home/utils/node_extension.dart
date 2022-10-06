@@ -26,22 +26,13 @@ class NodeMapper {
 
   static List<FileNode> _fromItems(List<File> noteItems) {
     return noteItems.map((noteItem) {
-      return Node(
-        key: noteItem.id ?? '',
-        label: noteItem.label,
-        data: noteItem,
-      );
+      return toNode(noteItem, false);
     }).toList(growable: false);
   }
 
   static List<FileNode> _fromNotebooks(List<File> notebooks) {
     return notebooks.map((notebook) {
-      return Node(
-        key: notebook.id ?? '',
-        label: notebook.label,
-        parent: true,
-        data: notebook,
-      );
+      return toNode(notebook, true);
     }).toList(growable: false);
   }
 
@@ -81,5 +72,14 @@ class NodeMapper {
 
   static List<File> fromNotebooks(List<Notebook> notebooks) {
     return notebooks.map(File.fromNotebook).toList(growable: false);
+  }
+
+  static FileNode toNode(File file, bool parent) {
+    return Node(
+      key: file.id ?? '',
+      label: file.label,
+      data: file,
+      parent: parent,
+    );
   }
 }

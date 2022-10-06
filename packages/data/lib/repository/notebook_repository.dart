@@ -13,7 +13,23 @@ class NotebookRepository extends LocalDataSource {
     });
   }
 
-  Future<int> addNotebook(String title, String? parentId) {
+  Future<Notebook?> getNotebook(String id) {
+    return database.folderDao.getFolder(id).then((value) {
+      if (value != null) {
+        return Notebook.from(value);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  Future<List<Notebook>> getNotebooksIn(String parentId) {
+    return database.folderDao.foldersIn(parentId).then((event) {
+      return event.map((element) => Notebook.from(element)).toList();
+    });
+  }
+
+  Future<String> addNotebook(String title, String? parentId) {
     int currentTime = DateUtils.currentTimestamp();
     Notebook notebook = Notebook(
       title: title,
