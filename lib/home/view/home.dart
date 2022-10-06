@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../design/theme.dart';
-import '../bloc/file_list_bloc.dart';
 import '../bloc/working_cubit.dart';
 import 'file_manager.dart';
 import 'side_bar_menu.dart';
@@ -17,7 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late FileListBloc _fileListBloc;
   late WorkingCubit _workingCubit;
   late NotebookRepository _notebookRepository;
   late NoteRepository _noteRepository;
@@ -28,8 +26,6 @@ class _HomeState extends State<Home> {
     _notebookRepository = Modular.get<NotebookRepository>();
     _noteRepository = Modular.get<NoteRepository>();
     _workingCubit = WorkingCubit();
-    _fileListBloc = FileListBloc(_notebookRepository, _noteRepository);
-    _fileListBloc.add(FileListRefresh());
   }
 
   @override
@@ -45,7 +41,6 @@ class _HomeState extends State<Home> {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => _fileListBloc),
           BlocProvider(create: (_) => _workingCubit),
         ],
         child: _mainContent(context),
@@ -70,7 +65,6 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     _workingCubit.close();
-    _fileListBloc.close();
     super.dispose();
   }
 }

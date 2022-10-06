@@ -16,7 +16,6 @@ class FileTree extends StatefulWidget {
     this.onNodeTap,
     this.onNodeDoubleTap,
     this.onExpansionChanged,
-    this.initialNodes = const [],
     this.notebookOptions = const [],
     this.notebookOptionSelected,
     this.noteOptions = const [],
@@ -24,7 +23,6 @@ class FileTree extends StatefulWidget {
     this.supportParentDoubleTap = false,
   }) : super(key: key);
 
-  final List<FileNode> initialNodes;
   final Function(TreeViewController, String)? onNodeTap;
   final Function(TreeViewController, String)? onNodeDoubleTap;
   final Function(TreeViewController, String, bool)? onExpansionChanged;
@@ -41,12 +39,12 @@ class FileTree extends StatefulWidget {
 }
 
 class _FileTreeState extends State<FileTree> {
-  late TreeViewController _treeViewController;
+  late FileTreeCubit _fileTreeCubit;
 
   @override
   void initState() {
     super.initState();
-    _treeViewController = TreeViewController(children: widget.initialNodes);
+    _fileTreeCubit = context.read<FileTreeCubit>();
   }
 
   Widget _createNode(BuildContext context, Node<dynamic> node) {
@@ -70,43 +68,28 @@ class _FileTreeState extends State<FileTree> {
   }
 
   void _expand(String key, bool expanded) {
-    final Node? node = _treeViewController.getNode(key);
-    if (node != null) {
-      List<Node> updated = _treeViewController.updateNode(key, node.copyWith(expanded: expanded));
-      setState(() {
-        _treeViewController = _treeViewController.copyWith(children: updated);
-      });
-    }
+    _fileTreeCubit.expand(key, expanded);
   }
 
   void _toggle(String key) {
-    final Node? node = _treeViewController.getNode(key);
-    if (node != null && node.isParent) {
-      _expand(key, !node.expanded);
-    }
+    _fileTreeCubit.toggle(key);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<FileTreeCubit, List<FileNode>>(
-      listener: (context, state) {
-        setState(() {
-          var selectedKey = _treeViewController.selectedKey;
-          _treeViewController = TreeViewController(children: state, selectedKey: selectedKey);
-        });
-      },
-      child: TreeView(
-        controller: _treeViewController,
+    return BlocBuilder<FileTreeCubit, TreeViewController>(builder: (context, state) {
+      return TreeView(
+        controller: state,
         allowParentSelect: false,
         supportParentDoubleTap: widget.supportParentDoubleTap,
-        onNodeTap: (key) => widget.onNodeTap?.call(_treeViewController, key),
+        onNodeTap: (key) => widget.onNodeTap?.call(state, key),
         onNodeDoubleTap: (key) {
           if (widget.supportParentDoubleTap) _toggle(key);
-          widget.onNodeDoubleTap?.call(_treeViewController, key);
+          widget.onNodeDoubleTap?.call(state, key);
         },
         onExpansionChanged: (key, expanded) {
           _expand(key, expanded);
-          widget.onExpansionChanged?.call(_treeViewController, key, expanded);
+          widget.onExpansionChanged?.call(state, key, expanded);
         },
         nodeBuilder: _createNode,
         theme: TreeViewTheme(
@@ -117,7 +100,7 @@ class _FileTreeState extends State<FileTree> {
           ),
           colorScheme: Theme.of(context).colorScheme,
         ),
-      ),
-    );
+      );
+    });
   }
 }

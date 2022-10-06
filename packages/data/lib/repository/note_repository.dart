@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:joplin_database/database/database.dart';
 
 import '../local_data_source.dart';
@@ -9,6 +11,22 @@ class NoteRepository extends LocalDataSource {
 
   Stream<List<NoteItem>> getNotes() {
     return database.noteDao.getNotes().map((event) {
+      return event.map((element) => NoteItem.from(element)).toList();
+    });
+  }
+
+  Future<NoteItem?> getNote(String id) {
+    return database.noteDao.getNote(id).then((value) {
+      if (value != null) {
+        return NoteItem.from(value);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  Future<List<NoteItem>> getNotesIn(String parentId) {
+    return database.noteDao.notesIn(parentId).then((event) {
       return event.map((element) => NoteItem.from(element)).toList();
     });
   }

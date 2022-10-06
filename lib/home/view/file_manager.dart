@@ -21,17 +21,19 @@ class FileManager extends StatefulWidget {
 }
 
 class _FileManagerState extends State<FileManager> {
-  final FileTreeCubit _fileTreeCubit = FileTreeCubit();
-  late NotebookRepository _notebookRepository;
-  late NoteRepository _noteRepository;
+  late FileListBloc _fileListBloc;
+  late FileTreeCubit _fileTreeCubit;
   late WorkingCubit _workingCubit;
 
   @override
   void initState() {
     super.initState();
-    _notebookRepository = RepositoryProvider.of<NotebookRepository>(context);
-    _noteRepository = RepositoryProvider.of<NoteRepository>(context);
+    NotebookRepository notebookRepository = RepositoryProvider.of<NotebookRepository>(context);
+    NoteRepository noteRepository = RepositoryProvider.of<NoteRepository>(context);
+    _fileListBloc = FileListBloc(notebookRepository, noteRepository);
+    _fileTreeCubit = FileTreeCubit(TreeViewController());
     _workingCubit = context.read<WorkingCubit>();
+    _fileListBloc.add(LoadFileList());
   }
 
   void _openEditor(String id) {
@@ -45,10 +47,7 @@ class _FileManagerState extends State<FileManager> {
       S.of(context).addNotebook,
       editorHint: S.of(context).nameInputHint,
     );
-    if (name.trim().isNotEmpty) {
-      int result = await _notebookRepository.addNotebook(name.trim(), parentId);
-      Log.d('Insert notebook $result');
-    }
+    _fileListBloc.add(AddNotebook(name));
   }
 
   Future<void> _updateNotebook(File file) async {
@@ -59,8 +58,7 @@ class _FileManagerState extends State<FileManager> {
       initialText: file.label,
     );
     if (name.trim().isNotEmpty && name.trim() != file.label.trim()) {
-      int result = await _notebookRepository.updateNotebook(file.id ?? '', name.trim());
-      Log.d('Update notebook $result');
+      _fileListBloc.add(RenameNotebook(file.id ?? '', name));
     }
   }
 
@@ -71,19 +69,13 @@ class _FileManagerState extends State<FileManager> {
       S.of(context).deleteConfirmMessage(file.label),
     );
     if (result == ViewDialogsAction.yes) {
-      // todo: delete all children
-      int result = await _notebookRepository.removeNotebook(file.id ?? '');
-      Log.d('Delete notebook $result');
+      _fileListBloc.add(DeleteNotebook(file.id ?? ''));
     }
   }
 
   void _addNote(String? parentId) async {
     if (parentId != null && parentId.isNotEmpty == true) {
-      String noteId = await _noteRepository.addNote(parentId, '', '');
-      Log.d('Insert note $noteId');
-      if (noteId.isNotEmpty) {
-        _openEditor(noteId);
-      }
+      _fileListBloc.add(AddNote(parentId));
     }
   }
 
@@ -102,8 +94,7 @@ class _FileManagerState extends State<FileManager> {
       initialText: file.label,
     );
     if (name.trim().isNotEmpty && name.trim() != file.label.trim()) {
-      int result = await _noteRepository.updateTitle(file.id ?? '', name.trim());
-      Log.d('Update note $result');
+      _fileListBloc.add(RenameNote(file.id ?? '', name));
     }
   }
 
@@ -114,67 +105,70 @@ class _FileManagerState extends State<FileManager> {
       S.of(context).deleteConfirmMessage(file.label),
     );
     if (result == ViewDialogsAction.yes) {
-      int result = await _noteRepository.removeNote(file.id ?? '');
-      Log.d('Delete note $result');
+      _fileListBloc.add(DeleteNote(file.id ?? ''));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        IconTextMenu(
-          icon: Icons.my_library_books_rounded,
-          action: Icons.note_add_rounded,
-          label: S.of(context).notebooks,
-          onAction: _addNotebook,
+    return BlocProvider<FileListBloc>(
+      create: (_) => _fileListBloc,
+      child: BlocListener<FileListBloc, FileListState>(
+        listener: _onFileListChanged,
+        child: Column(
+          children: [
+            IconTextMenu(
+              icon: Icons.my_library_books_rounded,
+              action: Icons.note_add_rounded,
+              label: S.of(context).notebooks,
+              onAction: _addNotebook,
+            ),
+            Dividers.horizontal(),
+            Expanded(
+              flex: 1,
+              child: _fileList(context),
+            ),
+          ],
         ),
-        Dividers.horizontal(),
-        Expanded(
-          flex: 1,
-          child: _fileList(context),
-        ),
-      ],
+      ),
     );
   }
 
   Widget _fileList(BuildContext context) {
-    return BlocBuilder<FileListBloc, FileListState>(builder: (context, state) {
-      List<FileNode> files = List.empty();
-      if (state is FileListData) {
-        files = NodeMapper.of(state.notebooks, state.notes);
-      }
-      if (files.isNotEmpty) {
-        return BlocProvider(
-          create: (_) => _fileTreeCubit,
-          child: BlocListener<FileListBloc, FileListState>(
-            listener: (context, state) {
-              if (state is FileListData) {
-                _fileTreeCubit.update(NodeMapper.of(state.notebooks, state.notes));
-              }
-            },
-            child: FileTree(
-              initialNodes: files,
-              onNodeTap: _handleFileSelected,
-              onNodeDoubleTap: _handleFileDoubleTap,
-              onExpansionChanged: _handleFolderExpansion,
-              notebookOptions: _notebookOptions(),
-              notebookOptionSelected: _onNotebookOptionSelected,
-              noteOptions: _noteOptions(),
-              noteOptionSelected: _onNoteOptionSelected,
-              supportParentDoubleTap: true,
-            ),
-          ),
-        );
-      } else {
-        return Center(
-          child: Text(
-            S.of(context).noNotebooks,
-            style: TextStyle(color: Theme.of(context).hintColor),
-          ),
-        );
-      }
-    });
+    return BlocBuilder<FileListBloc, FileListState>(
+        buildWhen: (previous, current) => current is FileListLoaded,
+        builder: (context, state) {
+          List<File> files = List.empty();
+          if (state is FileListLoaded) {
+            files = state.notebooks + state.notes;
+          }
+          if (files.isNotEmpty) {
+            return BlocProvider(
+              create: (_) => _fileTreeCubit,
+              child: BlocBuilder<FileListBloc, FileListState>(
+                builder: (context, state) {
+                  return FileTree(
+                    onNodeTap: _handleFileSelected,
+                    onNodeDoubleTap: _handleFileDoubleTap,
+                    onExpansionChanged: _handleFolderExpansion,
+                    notebookOptions: _notebookOptions(),
+                    notebookOptionSelected: _onNotebookOptionSelected,
+                    noteOptions: _noteOptions(),
+                    noteOptionSelected: _onNoteOptionSelected,
+                    supportParentDoubleTap: true,
+                  );
+                },
+              ),
+            );
+          } else {
+            return Center(
+              child: Text(
+                S.of(context).noNotebooks,
+                style: TextStyle(color: Theme.of(context).hintColor),
+              ),
+            );
+          }
+        });
   }
 
   void _handleFileSelected(TreeViewController controller, String id) {
@@ -281,6 +275,29 @@ class _FileManagerState extends State<FileManager> {
         {
           break;
         }
+    }
+  }
+
+  void _onFileListChanged(BuildContext context, FileListState state) {
+    if (state is FileListLoaded) {
+      _fileTreeCubit.set(NodeMapper.of(state.notebooks, state.notes));
+    } else if (state is FileLoadError) {
+      Log.d('Load files error ${state.message}');
+    } else if (state is FileAdded) {
+      if (state.parentId?.isNotEmpty == true) {
+        _fileTreeCubit.add(state.parentId ?? '', state.file);
+      } else {
+        _fileTreeCubit.addToRoot(state.file);
+      }
+      if (!state.file.isParent) {
+        _openEditor(state.file.key);
+      }
+    } else if (state is FileChanged) {
+      _fileTreeCubit.update(state.file);
+    } else if (state is FileDeleted) {
+      _fileTreeCubit.delete(state.id);
+    } else if (state is FileOpError) {
+      Log.d('File op error ${state.message}');
     }
   }
 

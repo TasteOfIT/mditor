@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../l10n/wording.dart';
 import 'file.dart';
 import 'file_tree.dart';
 
@@ -18,6 +19,10 @@ class FileTreeItem<File> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String label = node.label;
+    if (label.trim().isEmpty) {
+      label = S.of(context).nameInputHint;
+    }
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: Row(
