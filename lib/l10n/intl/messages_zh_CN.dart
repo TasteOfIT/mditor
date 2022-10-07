@@ -22,14 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "确定要删除\"${name}\"?";
 
-  static String m1(name) => "嗨, ${name}";
+  static String m1(name) => "嗨, 我是${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("新建笔记"),
+        "addNoteHint": MessageLookupByLibrary.simpleMessage("点击右下角按钮创建第一个笔记吧"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("新建笔记本"),
         "addNotebookHint":
-            MessageLookupByLibrary.simpleMessage("打开左侧菜单创建选择一个笔记本"),
+            MessageLookupByLibrary.simpleMessage("打开左侧菜单创建或选择一个笔记本"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteConfirmMessage": m0,
@@ -44,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notebooks": MessageLookupByLibrary.simpleMessage("所有笔记本"),
         "rename": MessageLookupByLibrary.simpleMessage("重命名"),
         "renameNote": MessageLookupByLibrary.simpleMessage("重命名笔记"),
-        "settings": MessageLookupByLibrary.simpleMessage("设置")
+        "settings": MessageLookupByLibrary.simpleMessage("设置"),
+        "view": MessageLookupByLibrary.simpleMessage("查看")
       };
 }

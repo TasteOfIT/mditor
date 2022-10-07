@@ -9,6 +9,15 @@ class NotesInitial extends NotesState {
   List<Object> get props => [];
 }
 
+class NotesError extends NotesState {
+  final String message;
+
+  const NotesError(this.message) : super();
+
+  @override
+  List<Object> get props => [message];
+}
+
 class NotesLoaded extends NotesState {
   final String id;
   final String name;

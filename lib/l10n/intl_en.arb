@@ -4,16 +4,20 @@
     "@appName": {
         "description": "The application name"
     },
-    "hello": "Hello, {name}",
+    "hello": "Hi, I am {name}",
     "@hello": {
         "description": "A welcome message",
         "placeholders": {
             "name": {}
         }
     },
-    "addNotebookHint": "Open drawer on left side and select a notebook",
+    "addNotebookHint": "Open drawer on the left to create or select a notebook",
     "@addNotebookHint": {
         "description": "A help message to create notebook"
+    },
+    "addNoteHint": "Click the floating button in the lower right corner to create your first note",
+    "@addNoteHint": {
+        "description": "A help message to create note"
     },
     "addNote": "New note",
     "@addNote": {
@@ -45,6 +49,10 @@
         "placeholders": {
             "name": {}
         }
+    },
+    "view": "View",
+    "@view": {
+        "description": "Label of view"
     },
     "edit": "Edit",
     "@edit": {

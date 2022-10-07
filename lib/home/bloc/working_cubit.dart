@@ -10,4 +10,6 @@ class WorkingCubit extends Cubit<WorkingState> {
   void cd(String? notebookId) => emit(state.cd(notebookId));
 
   void open(String? noteId) => emit(state.open(noteId));
+
+  void goTo(String? notebookId) => emit(state.goTo(notebookId));
 }
