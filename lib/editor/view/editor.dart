@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +31,8 @@ class _EditorState extends State<Editor> {
   late String _noteId;
   late String _title;
 
+  late Timer _autoSaveTimer;
+
   String get body => _controller.value.text;
 
   @override
@@ -44,9 +48,15 @@ class _EditorState extends State<Editor> {
     _noteId = widget.noteId;
     _title = '';
     _noteContentBloc.add(LoadNoteContent(_noteId));
+    _autoSaveTimer = Timer.periodic(const Duration(seconds: 15), (timer) => _saveContent());
+  }
+
+  void _saveContent() {
+    _noteContentBloc.add(ChangeNoteBody(_noteId, body));
   }
 
   void _preview() {
+    _saveContent();
     Routes.add(Routes.routeViewer, args: Doc(title: _title, content: body));
   }
 
@@ -132,9 +142,7 @@ class _EditorState extends State<Editor> {
         _title = state.title;
       });
     } else if (state is NoteBodyChanged) {
-      setState(() {
-        _controller.text = state.body;
-      });
+      // ignore, data was saved from here
     } else if (state is NoteDeleted) {
       _openFolder();
     }
@@ -149,9 +157,17 @@ class _EditorState extends State<Editor> {
   }
 
   @override
+  void deactivate() {
+    Log.d('Save when deactivate');
+    _saveContent();
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
-    _controller.dispose();
+    _autoSaveTimer.cancel();
     _noteContentBloc.close();
+    _controller.dispose();
     super.dispose();
   }
 }
