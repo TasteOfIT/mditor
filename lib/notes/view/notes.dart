@@ -82,7 +82,7 @@ class _NotesState extends State<Notes> {
       buildWhen: (context, state) => state is NotesLoaded,
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBarBuilder.withDrawer(context, _formatTitle(state), _openDrawer, []),
+          appBar: AppBarBuilder.withDrawer(context, _formatTitle(state), _openDrawer),
           body: _content(state),
           floatingActionButton: _floatingActionButton(context, !showEmpty),
         );
