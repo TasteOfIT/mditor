@@ -13,7 +13,12 @@ class AppBarBuilder {
     );
   }
 
-  static AppBar withDrawer(BuildContext context, String title, VoidCallback openDrawer, List<ActionData> actions) {
+  static AppBar withDrawer(
+    BuildContext context,
+    String title,
+    VoidCallback openDrawer, {
+    List<ActionData> actions = const [],
+  }) {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.menu),
