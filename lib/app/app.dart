@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Modular.setInitialRoute(Routes.routeWelcome);
+    Modular.setInitialRoute(Routes.routeNotes);
     return BlocProvider(
       create: (_) => ThemeModeCubit(),
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, themeMode) {

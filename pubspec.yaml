@@ -42,6 +42,7 @@ dependencies:
   path_provider: ^2.0.11
   flutter_treeview: ^1.0.7+1
   json_annotation: ^4.7.0
+  flip_card: ^0.6.0
 
   # Documents
   flutter_widget_from_html_core: ^0.8.5+3
