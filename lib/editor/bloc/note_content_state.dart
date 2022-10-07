@@ -53,3 +53,12 @@ class NoteBodyChanged extends NoteContentState {
   @override
   List<Object?> get props => [id, body];
 }
+
+class NoteDeleted extends NoteContentState {
+  final String id;
+
+  const NoteDeleted(this.id) : super();
+
+  @override
+  List<Object?> get props => [id];
+}

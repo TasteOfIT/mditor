@@ -7,6 +7,7 @@ import '../../design/theme.dart';
 import '../../home/bloc/working_cubit.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/app_bar.dart';
+import '../../widgets/file_dialogs.dart';
 import '../bloc/note_content_bloc.dart';
 
 class Editor extends StatefulWidget {
@@ -57,6 +58,18 @@ class _EditorState extends State<Editor> {
     context.read<AppDrawerCubit>().openDrawer();
   }
 
+  void _rename() async {
+    await FileDialogs.renameNote(context, _title, (name) {
+      _noteContentBloc.add(ChangeNoteTitle(_noteId, name));
+    });
+  }
+
+  void _delete() async {
+    await FileDialogs.deleteFile(context, _title, () {
+      _noteContentBloc.add(DeleteNote(_noteId));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NoteContentBloc>(
@@ -78,7 +91,7 @@ class _EditorState extends State<Editor> {
   Widget _editor() {
     return BlocConsumer<NoteContentBloc, NoteContentState>(
       listener: (context, state) {
-        _showNote(state);
+        _updateNote(state);
       },
       builder: (context, state) {
         return Scaffold(
@@ -86,7 +99,11 @@ class _EditorState extends State<Editor> {
             context,
             _formatTitle(),
             _openDrawer,
-            actions: [ActionData(Icons.preview, _preview)],
+            actions: [
+              ActionData(Icons.preview, _preview),
+              ActionData(Icons.edit_outlined, _rename),
+              ActionData(Icons.delete_outline_rounded, _delete, color: Theme.of(context).errorColor),
+            ],
           ),
           body: TextField(
             decoration: InputDecoration(
@@ -104,12 +121,22 @@ class _EditorState extends State<Editor> {
     );
   }
 
-  void _showNote(NoteContentState state) {
+  void _updateNote(NoteContentState state) {
     if (state is NoteContentLoaded) {
       setState(() {
         _title = state.title;
         _controller.text = state.body;
       });
+    } else if (state is NoteTitleChanged) {
+      setState(() {
+        _title = state.title;
+      });
+    } else if (state is NoteBodyChanged) {
+      setState(() {
+        _controller.text = state.body;
+      });
+    } else if (state is NoteDeleted) {
+      _openFolder();
     }
   }
 

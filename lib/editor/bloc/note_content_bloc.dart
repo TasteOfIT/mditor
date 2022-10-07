@@ -13,6 +13,7 @@ class NoteContentBloc extends Bloc<NoteContentEvent, NoteContentState> {
     on<LoadNoteContent>(_loadNote);
     on<ChangeNoteTitle>(_titleChanged);
     on<ChangeNoteBody>(_bodyChanged);
+    on<DeleteNote>(_deleteNote);
   }
 
   void _loadNote(LoadNoteContent event, Emitter<NoteContentState> emit) async {
@@ -37,6 +38,13 @@ class NoteContentBloc extends Bloc<NoteContentEvent, NoteContentState> {
     int result = await _noteRepo.updateContent(event.id, event.body);
     if (result == 1) {
       emit(NoteBodyChanged(event.id, event.body));
+    }
+  }
+
+  void _deleteNote(DeleteNote event, Emitter<NoteContentState> emit) async {
+    int result = await _noteRepo.removeNote(event.id);
+    if (result == 1) {
+      emit(NoteDeleted(event.id));
     }
   }
 }

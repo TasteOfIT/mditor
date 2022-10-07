@@ -14,7 +14,7 @@ class Routes {
   static List<ModularRoute> get() {
     return [
       ChildRoute(routeHome, child: (context, args) => const Home(), children: [
-        ChildRoute(routeNotes, child: (context, args) => Notes(notebookId: args.data as String? ?? '')),
+        ChildRoute(routeNotes, child: (context, args) => Notes(notebookId: args.data as String?)),
         ChildRoute(routeEditor, child: (context, args) => Editor(noteId: args.data as String)),
         ChildRoute(routeViewer, child: (context, args) => const Viewer()),
       ])
