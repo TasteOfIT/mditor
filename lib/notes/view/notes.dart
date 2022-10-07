@@ -7,15 +7,14 @@ import '../../design/theme.dart';
 import '../../home/bloc/working_cubit.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/app_bar.dart';
+import '../../widgets/file_dialogs.dart';
 import '../bloc/notes_bloc.dart';
 import 'empty.dart';
 import 'note_list.dart';
 
 class Notes extends StatefulWidget {
-  const Notes({
-    Key? key,
-    this.notebookId,
-  }) : super(key: key);
+  const Notes({Key? key, this.notebookId}) : super(key: key);
+
   final String? notebookId;
 
   @override
@@ -37,17 +36,19 @@ class _NotesState extends State<Notes> {
   }
 
   void _loadNotes(String? notebookId) {
-    _notesBloc.add(LoadNotes(notebookId));
+    if (notebookId?.isNotEmpty == true) {
+      _notesBloc.add(LoadNotes(notebookId));
+    } else {
+      _notesBloc.add(LoadNotes(context.read<WorkingCubit>().state.notebookId));
+    }
   }
 
   void _addNote() async {
     String? parentId = context.read<WorkingCubit>().state.notebookId;
     if (parentId != null && parentId.isNotEmpty == true) {
-      String noteId = await _noteRepository.addNote(parentId, '', '');
-      Log.d('Add note $noteId');
-      if (noteId.isNotEmpty) {
-        Routes.open(Routes.routeEditor, args: noteId);
-      }
+      await FileDialogs.addNotebook(context, (name) {
+        _notesBloc.add(AddNotebook(parentId, name));
+      });
     }
   }
 
@@ -83,8 +84,12 @@ class _NotesState extends State<Notes> {
         floatingActionButton: _floatingActionButton(context, !showEmpty),
       );
     }
-    return BlocBuilder<NotesBloc, NotesState>(
-      buildWhen: (context, state) => state is NotesLoaded,
+    return BlocConsumer<NotesBloc, NotesState>(
+      listener: (context, state) {
+        if (state is NoteAdded) {
+          Routes.open(Routes.routeEditor, args: state.id);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBarBuilder.withDrawer(context, _formatTitle(state), _openDrawer),

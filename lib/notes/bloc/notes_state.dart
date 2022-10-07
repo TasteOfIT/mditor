@@ -28,3 +28,12 @@ class NotesLoaded extends NotesState {
   @override
   List<Object?> get props => [id, name, files];
 }
+
+class NoteAdded extends NotesState {
+  final String id;
+
+  const NoteAdded(this.id) : super();
+
+  @override
+  List<Object?> get props => [id];
+}

@@ -271,6 +271,8 @@ class _FileManagerState extends State<FileManager> {
         _fileTreeCubit.addToRoot(state.file);
       }
       if (!state.file.isParent) {
+        _workingCubit.open(state.file.key);
+        _workingCubit.cd(state.parentId);
         _openEditor(state.file.key);
       }
     } else if (state is FileChanged) {

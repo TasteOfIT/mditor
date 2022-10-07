@@ -32,3 +32,12 @@ class ChangeNoteBody extends NoteContentEvent {
   @override
   List<Object?> get props => [id, body];
 }
+
+class DeleteNote extends NoteContentEvent {
+  final String id;
+
+  const DeleteNote(this.id) : super();
+
+  @override
+  List<Object?> get props => [id];
+}

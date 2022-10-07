@@ -92,6 +92,9 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     assert(_currentNotebook?.id?.isNotEmpty == true);
     String noteId = await _noteRepo.addNote(_currentNotebook?.id ?? '', '', '');
     Log.d('Insert note $noteId');
+    if (noteId.isNotEmpty) {
+      emit(NoteAdded(noteId));
+    }
   }
 
   void _renameNote(RenameNote event, Emitter<NotesState> emit) async {

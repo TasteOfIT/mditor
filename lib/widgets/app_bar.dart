@@ -27,7 +27,11 @@ class AppBarBuilder {
       ),
       title: Text(title),
       actions: actions.map((action) {
-        return ActionMenu(icon: action.icon, pressCallback: action.callback);
+        return ActionMenu(
+          icon: action.icon,
+          pressCallback: action.callback,
+          color: action.color,
+        );
       }).toList(),
       automaticallyImplyLeading: false,
     );
@@ -35,11 +39,12 @@ class AppBarBuilder {
 }
 
 class ActionData extends Equatable {
-  const ActionData(this.icon, this.callback);
+  const ActionData(this.icon, this.callback, {this.color});
 
   final IconData icon;
+  final Color? color;
   final VoidCallback callback;
 
   @override
-  List<Object?> get props => [icon, callback];
+  List<Object?> get props => [icon, color, callback];
 }
