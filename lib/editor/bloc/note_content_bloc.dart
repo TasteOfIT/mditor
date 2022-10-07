@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:data/data.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../app/app.dart';
+
 part 'note_content_event.dart';
 
 part 'note_content_state.dart';
@@ -29,6 +31,7 @@ class NoteContentBloc extends Bloc<NoteContentEvent, NoteContentState> {
 
   void _titleChanged(ChangeNoteTitle event, Emitter<NoteContentState> emit) async {
     int result = await _noteRepo.updateTitle(event.id, event.title);
+    Log.d('Rename note $result');
     if (result == 1) {
       emit(NoteTitleChanged(event.id, event.title));
     }
@@ -36,6 +39,7 @@ class NoteContentBloc extends Bloc<NoteContentEvent, NoteContentState> {
 
   void _bodyChanged(ChangeNoteBody event, Emitter<NoteContentState> emit) async {
     int result = await _noteRepo.updateContent(event.id, event.body);
+    Log.d('Save note $result');
     if (result == 1) {
       emit(NoteBodyChanged(event.id, event.body));
     }
@@ -43,6 +47,7 @@ class NoteContentBloc extends Bloc<NoteContentEvent, NoteContentState> {
 
   void _deleteNote(DeleteNote event, Emitter<NoteContentState> emit) async {
     int result = await _noteRepo.removeNote(event.id);
+    Log.d('Delete note $result');
     if (result == 1) {
       emit(NoteDeleted(event.id));
     }
