@@ -22,14 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Do you want to delete \"${name}\"?";
 
-  static String m1(name) => "Hello, ${name}";
+  static String m1(name) => "Hi, I am ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("New note"),
+        "addNoteHint": MessageLookupByLibrary.simpleMessage(
+            "Click the floating button in the lower right corner to create your first note"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("New notebook"),
         "addNotebookHint": MessageLookupByLibrary.simpleMessage(
-            "Open drawer on left side and select a notebook"),
+            "Open drawer on the left to create or select a notebook"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteConfirmMessage": m0,
@@ -44,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notebooks": MessageLookupByLibrary.simpleMessage("Notebooks"),
         "rename": MessageLookupByLibrary.simpleMessage("Rename"),
         "renameNote": MessageLookupByLibrary.simpleMessage("Rename note"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings")
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "view": MessageLookupByLibrary.simpleMessage("View")
       };
 }

@@ -23,8 +23,8 @@ class NotebookRepository extends LocalDataSource {
     });
   }
 
-  Future<List<Notebook>> getNotebooksIn(String parentId) {
-    return database.folderDao.foldersIn(parentId).then((event) {
+  Stream<List<Notebook>> getNotebooksIn(String parentId) {
+    return database.folderDao.foldersIn(parentId).map((event) {
       return event.map((element) => Notebook.from(element)).toList();
     });
   }

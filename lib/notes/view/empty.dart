@@ -40,6 +40,13 @@ class Empty extends StatelessWidget {
           S.of(context).hello(S.of(context).appName),
           style: Theme.of(context).textTheme.headline2,
         ),
+        SizedBox.fromSize(
+          size: const Size.fromHeight(20),
+        ),
+        Text(
+          S.of(context).addNoteHint,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ];
     }
   }

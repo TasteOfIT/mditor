@@ -60,22 +60,32 @@ class S {
     );
   }
 
-  /// `Hello, {name}`
+  /// `Hi, I am {name}`
   String hello(Object name) {
     return Intl.message(
-      'Hello, $name',
+      'Hi, I am $name',
       name: 'hello',
       desc: 'A welcome message',
       args: [name],
     );
   }
 
-  /// `Open drawer on left side and select a notebook`
+  /// `Open drawer on the left to create or select a notebook`
   String get addNotebookHint {
     return Intl.message(
-      'Open drawer on left side and select a notebook',
+      'Open drawer on the left to create or select a notebook',
       name: 'addNotebookHint',
       desc: 'A help message to create notebook',
+      args: [],
+    );
+  }
+
+  /// `Click the floating button in the lower right corner to create your first note`
+  String get addNoteHint {
+    return Intl.message(
+      'Click the floating button in the lower right corner to create your first note',
+      name: 'addNoteHint',
+      desc: 'A help message to create note',
       args: [],
     );
   }
@@ -147,6 +157,16 @@ class S {
       name: 'deleteConfirmMessage',
       desc: 'Confirm message of delete',
       args: [name],
+    );
+  }
+
+  /// `View`
+  String get view {
+    return Intl.message(
+      'View',
+      name: 'view',
+      desc: 'Label of view',
+      args: [],
     );
   }
 

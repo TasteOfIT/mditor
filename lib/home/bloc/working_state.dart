@@ -16,6 +16,11 @@ class WorkingState extends Equatable {
         noteId: note,
       );
 
+  WorkingState goTo(String? notebook) => WorkingState(
+        notebookId: notebook,
+        noteId: null,
+      );
+
   @override
   List<Object?> get props => [notebookId, noteId];
 }

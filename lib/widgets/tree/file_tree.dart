@@ -71,10 +71,6 @@ class _FileTreeState extends State<FileTree> {
     _fileTreeCubit.expand(key, expanded);
   }
 
-  void _toggle(String key) {
-    _fileTreeCubit.toggle(key);
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FileTreeCubit, TreeViewController>(builder: (context, state) {
@@ -83,10 +79,7 @@ class _FileTreeState extends State<FileTree> {
         allowParentSelect: false,
         supportParentDoubleTap: widget.supportParentDoubleTap,
         onNodeTap: (key) => widget.onNodeTap?.call(state, key),
-        onNodeDoubleTap: (key) {
-          if (widget.supportParentDoubleTap) _toggle(key);
-          widget.onNodeDoubleTap?.call(state, key);
-        },
+        onNodeDoubleTap: (key) => widget.onNodeDoubleTap?.call(state, key),
         onExpansionChanged: (key, expanded) {
           _expand(key, expanded);
           widget.onExpansionChanged?.call(state, key, expanded);

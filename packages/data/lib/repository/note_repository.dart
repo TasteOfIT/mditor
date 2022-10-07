@@ -25,8 +25,8 @@ class NoteRepository extends LocalDataSource {
     });
   }
 
-  Future<List<NoteItem>> getNotesIn(String parentId) {
-    return database.noteDao.notesIn(parentId).then((event) {
+  Stream<List<NoteItem>> getNotesIn(String parentId) {
+    return database.noteDao.notesIn(parentId).map((event) {
       return event.map((element) => NoteItem.from(element)).toList();
     });
   }

@@ -13,6 +13,13 @@ class LoadNotes extends NotesEvent {
   List<Object?> get props => [id];
 }
 
+class PublishNotes extends NotesEvent {
+  const PublishNotes() : super();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class AddNote extends NotesEvent {
   final String id;
 

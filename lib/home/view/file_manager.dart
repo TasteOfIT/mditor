@@ -6,9 +6,9 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 import '../../app/app.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/dividers.dart';
+import '../../widgets/file_dialogs.dart';
 import '../../widgets/icon_text_menu.dart';
 import '../../widgets/tree/file_tree.dart';
-import '../../widgets/view_dialogs.dart';
 import '../bloc/file_list_bloc.dart';
 import '../bloc/working_cubit.dart';
 import '../utils/node_extension.dart';
@@ -41,39 +41,30 @@ class _FileManagerState extends State<FileManager> {
     Routes.open(Routes.routeEditor, args: id);
   }
 
+  void _openNotebook(String id) {
+    Scaffold.of(context).closeDrawer();
+    Routes.open(Routes.routeNotes, args: id);
+  }
+
   Future<void> _addNotebook({String? parentId = ''}) async {
-    String name = await ViewDialogs.editorDialog(
-      context,
-      S.of(context).addNotebook,
-      editorHint: S.of(context).nameInputHint,
-    );
-    _fileListBloc.add(AddNotebook(name));
+    await FileDialogs.addNotebook(context, (name) {
+      _fileListBloc.add(AddNotebook(name, parentId: parentId));
+    });
   }
 
   Future<void> _updateNotebook(File file) async {
-    String name = await ViewDialogs.editorDialog(
-      context,
-      S.of(context).editNotebook,
-      editorHint: S.of(context).nameInputHint,
-      initialText: file.label,
-    );
-    if (name.trim().isNotEmpty && name.trim() != file.label.trim()) {
+    await FileDialogs.renameNotebook(context, file.label, (name) {
       _fileListBloc.add(RenameNotebook(file.id ?? '', name));
-    }
+    });
   }
 
   Future<void> _deleteNotebook(File file) async {
-    ViewDialogsAction result = await ViewDialogs.simpleDialog(
-      context,
-      S.of(context).delete,
-      S.of(context).deleteConfirmMessage(file.label),
-    );
-    if (result == ViewDialogsAction.yes) {
+    await FileDialogs.deleteFile(context, file.label, () {
       _fileListBloc.add(DeleteNotebook(file.id ?? ''));
-    }
+    });
   }
 
-  void _addNote(String? parentId) async {
+  Future<void> _addNote(String? parentId) async {
     if (parentId != null && parentId.isNotEmpty == true) {
       _fileListBloc.add(AddNote(parentId));
     }
@@ -86,27 +77,16 @@ class _FileManagerState extends State<FileManager> {
     }
   }
 
-  void _updateNoteTitle(File file) async {
-    String name = await ViewDialogs.editorDialog(
-      context,
-      S.of(context).renameNote,
-      editorHint: S.of(context).nameInputHint,
-      initialText: file.label,
-    );
-    if (name.trim().isNotEmpty && name.trim() != file.label.trim()) {
+  Future<void> _updateNoteTitle(File file) async {
+    await FileDialogs.renameNote(context, file.label, (name) {
       _fileListBloc.add(RenameNote(file.id ?? '', name));
-    }
+    });
   }
 
-  void _deleteNote(File file) async {
-    ViewDialogsAction result = await ViewDialogs.simpleDialog(
-      context,
-      S.of(context).delete,
-      S.of(context).deleteConfirmMessage(file.label),
-    );
-    if (result == ViewDialogsAction.yes) {
+  Future<void> _deleteNote(File file) async {
+    await FileDialogs.deleteFile(context, file.label, () {
       _fileListBloc.add(DeleteNote(file.id ?? ''));
-    }
+    });
   }
 
   @override
@@ -186,7 +166,8 @@ class _FileManagerState extends State<FileManager> {
         _workingCubit.open(id);
         _openEditor(id);
       } else {
-        //todo: open notebook editor
+        _workingCubit.goTo(id);
+        _openNotebook(id);
       }
     }
   }

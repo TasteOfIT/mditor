@@ -1,13 +1,19 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../app/app.dart';
+import '../../l10n/wording.dart';
+import '../../widgets/file_dialogs.dart';
 import '../../widgets/tree/file.dart';
+import '../bloc/notes_bloc.dart';
 
 class NotesList extends StatelessWidget {
-  const NotesList(this.files, {super.key, this.onNoteTap});
+  const NotesList(this.files, this.notesBloc, {super.key, this.onNoteTap});
 
   final List<File> files;
   final void Function(File)? onNoteTap;
+  final NotesBloc notesBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +68,8 @@ class NotesList extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20, bottom: 8, left: 20, right: 20),
               child: Icon(icon, size: 80),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 6),
+            SizedBox(
+              width: 128,
               child: Text(
                 file.label,
                 style: Theme.of(context).textTheme.bodyLarge,
@@ -90,9 +96,9 @@ class NotesList extends StatelessWidget {
   Widget _opsCard(BuildContext context, File file, GlobalKey<FlipCardState> controller) {
     List<Widget> ops;
     if (file.isFolder) {
-      ops = _notebookOps(file, controller);
+      ops = _notebookOps(context, file, controller);
     } else {
-      ops = _noteOps(file, controller);
+      ops = _noteOps(context, file, controller);
     }
     return Stack(
       alignment: Alignment.topRight,
@@ -123,28 +129,34 @@ class NotesList extends StatelessWidget {
     );
   }
 
-  List<Widget> _noteOps(File file, GlobalKey<FlipCardState> controller) {
+  List<Widget> _noteOps(BuildContext context, File file, GlobalKey<FlipCardState> controller) {
     return [
       _opButton(
         Icons.remove_red_eye_outlined,
-        () {
-          controller.currentState?.toggleCard();
-        },
+        S.of(context).view,
+        () => Routes.open(Routes.routeEditor, args: file.id),
       ),
       _opButton(
         Icons.edit_outlined,
-        () {
-          controller.currentState?.toggleCard();
+        S.of(context).rename,
+        () async {
+          await FileDialogs.renameNote(context, file.label, (name) {
+            notesBloc.add(RenameNote(file.id ?? '', name));
+          });
         },
       ),
       _opButton(
         Icons.delete_outline_rounded,
-        () {
-          controller.currentState?.toggleCard();
+        S.of(context).delete,
+        () async {
+          await FileDialogs.deleteFile(context, file.label, () {
+            notesBloc.add(DeleteNote(file.id ?? ''));
+          });
         },
       ),
       _opButton(
         Icons.drive_file_move_outlined,
+        S.of(context).moveTo,
         () {
           controller.currentState?.toggleCard();
         },
@@ -152,28 +164,34 @@ class NotesList extends StatelessWidget {
     ];
   }
 
-  List<Widget> _notebookOps(File file, GlobalKey<FlipCardState> controller) {
+  List<Widget> _notebookOps(BuildContext context, File file, GlobalKey<FlipCardState> controller) {
     return [
       _opButton(
         Icons.remove_red_eye_outlined,
-        () {
-          controller.currentState?.toggleCard();
-        },
+        S.of(context).view,
+        () => context.read<NotesBloc>().add(LoadNotes(file.id)),
       ),
       _opButton(
         Icons.edit_outlined,
-        () {
-          controller.currentState?.toggleCard();
+        S.of(context).rename,
+        () async {
+          await FileDialogs.renameNotebook(context, file.label, (name) {
+            notesBloc.add(RenameNotebook(file.id ?? '', name));
+          });
         },
       ),
       _opButton(
         Icons.delete_outline_rounded,
-        () {
-          controller.currentState?.toggleCard();
+        S.of(context).delete,
+        () async {
+          await FileDialogs.deleteFile(context, file.label, () {
+            notesBloc.add(DeleteNotebook(file.id ?? ''));
+          });
         },
       ),
       _opButton(
         Icons.drive_file_move_outlined,
+        S.of(context).moveTo,
         () {
           controller.currentState?.toggleCard();
         },
@@ -181,12 +199,13 @@ class NotesList extends StatelessWidget {
     ];
   }
 
-  Widget _opButton(IconData icon, void Function()? onPressed) {
+  Widget _opButton(IconData icon, String label, void Function()? onPressed) {
     return SizedBox(
       width: 52,
       height: 52,
       child: IconButton(
         onPressed: onPressed,
+        tooltip: label,
         icon: Icon(
           icon,
           size: 36,

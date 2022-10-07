@@ -12,7 +12,11 @@ import 'empty.dart';
 import 'note_list.dart';
 
 class Notes extends StatefulWidget {
-  const Notes({Key? key}) : super(key: key);
+  const Notes({
+    Key? key,
+    this.notebookId,
+  }) : super(key: key);
+  final String? notebookId;
 
   @override
   State<Notes> createState() => _NotesState();
@@ -29,10 +33,11 @@ class _NotesState extends State<Notes> {
     _notebookRepository = RepositoryProvider.of<NotebookRepository>(context);
     _noteRepository = RepositoryProvider.of<NoteRepository>(context);
     _notesBloc = NotesBloc(_notebookRepository, _noteRepository);
+    _loadNotes(widget.notebookId);
   }
 
-  void _loadNotes(WorkingState state) {
-    _notesBloc.add(LoadNotes(state.notebookId));
+  void _loadNotes(String? notebookId) {
+    _notesBloc.add(LoadNotes(notebookId));
   }
 
   void _addNote() async {
@@ -56,7 +61,7 @@ class _NotesState extends State<Notes> {
       create: (_) => _notesBloc,
       child: BlocConsumer<WorkingCubit, WorkingState>(
         listener: (context, state) {
-          _loadNotes(state);
+          _loadNotes(state.notebookId);
         },
         builder: (context, state) {
           return _container(state);
@@ -95,7 +100,7 @@ class _NotesState extends State<Notes> {
       if (state.files.isEmpty) {
         return const Empty(notebookSelected: true);
       } else {
-        return NotesList(state.files);
+        return NotesList(state.files, _notesBloc);
       }
     } else {
       return const Empty();
