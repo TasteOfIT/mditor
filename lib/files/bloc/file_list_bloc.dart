@@ -7,7 +7,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../app/log.dart';
 import '../../widgets/tree/file_tree.dart';
-import '../utils/node_extension.dart';
+import '../utils/file_extension.dart';
 
 part 'file_list_event.dart';
 
@@ -48,8 +48,8 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
   void _tryPublishFileList(Emitter<FileListState> emit) {
     if (_latestNotes != null && _latestNotebooks != null) {
       emit(FileListLoaded(
-        NodeMapper.fromNotebooks(_latestNotebooks ?? List.empty()),
-        NodeMapper.fromItems(_latestNotes ?? List.empty()),
+        FilesExt.fromNotebooks(_latestNotebooks ?? List.empty()),
+        FilesExt.fromItems(_latestNotes ?? List.empty()),
       ));
     }
   }
@@ -128,7 +128,7 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
   Future<FileNode?> _getNote(String id) async {
     return _noteRepo.getNote(id).then((value) {
       if (value != null) {
-        return NodeMapper.toNode(File.fromNoteItem(value), false);
+        return FilesExt.toNode(File.fromNoteItem(value), false);
       }
       return null;
     });
@@ -137,7 +137,7 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
   Future<FileNode?> _getNotebook(String id) async {
     return _notebookRepo.getNotebook(id).then((value) {
       if (value != null) {
-        return NodeMapper.toNode(File.fromNotebook(value), true);
+        return FilesExt.toNode(File.fromNotebook(value), true);
       }
       return null;
     });

@@ -5,7 +5,7 @@ import 'package:data/data.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../app/app.dart';
-import '../../home/utils/node_extension.dart';
+import '../../files/files.dart';
 import '../../widgets/tree/file.dart';
 
 part 'notes_event.dart';
@@ -49,12 +49,12 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
       if (_currentNotebook != null && _currentNotebook?.id?.isNotEmpty == true) {
         _notebookSub?.cancel();
         _notebookSub = _notebookRepo.getNotebooksIn(event.id ?? '').listen((data) {
-          _latestNotebooks = NodeMapper.fromNotebooks(data);
+          _latestNotebooks = FilesExt.fromNotebooks(data);
           add(const PublishNotes());
         });
         _noteSub?.cancel();
         _noteSub = _noteRepo.getNotesIn(event.id ?? '').listen((data) {
-          _latestNotes = NodeMapper.fromItems(data);
+          _latestNotes = FilesExt.fromItems(data);
           add(const PublishNotes());
         });
       } else {

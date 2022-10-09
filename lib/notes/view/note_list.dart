@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/app.dart';
+import '../../files/view/file_dialogs.dart';
 import '../../l10n/wording.dart';
-import '../../widgets/file_dialogs.dart';
 import '../../widgets/tree/file.dart';
 import '../bloc/notes_bloc.dart';
 

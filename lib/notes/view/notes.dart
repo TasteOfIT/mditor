@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/app.dart';
-import '../../design/theme.dart';
-import '../../home/bloc/working_cubit.dart';
+import '../../files/files.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/app_bar.dart';
-import '../../widgets/file_dialogs.dart';
 import '../bloc/notes_bloc.dart';
 import 'empty.dart';
 import 'note_list.dart';
@@ -52,10 +50,6 @@ class _NotesState extends State<Notes> {
     }
   }
 
-  void _openDrawer() {
-    context.read<AppDrawerCubit>().openDrawer();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NotesBloc>(
@@ -74,13 +68,12 @@ class _NotesState extends State<Notes> {
   Widget _container(WorkingState workingState) {
     bool showEmpty = workingState.notebookId?.isNotEmpty != true;
     if (showEmpty) {
-      return Scaffold(
-        appBar: AppBarBuilder.withDrawer(
-          context,
+      return FilesDrawerScaffold(
+        const Empty(),
+        appBar: AppBarBuilder.get(
           S.of(context).home,
-          _openDrawer,
+          const [],
         ),
-        body: const Empty(),
         floatingActionButton: _floatingActionButton(context, !showEmpty),
       );
     }
@@ -91,9 +84,9 @@ class _NotesState extends State<Notes> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBarBuilder.withDrawer(context, _formatTitle(state), _openDrawer),
-          body: _content(state),
+        return FilesDrawerScaffold(
+          _content(state),
+          appBar: AppBarBuilder.get(_formatTitle(state), const []),
           floatingActionButton: _floatingActionButton(context, !showEmpty),
         );
       },
@@ -112,7 +105,7 @@ class _NotesState extends State<Notes> {
     }
   }
 
-  Widget? _floatingActionButton(BuildContext context, bool canAddNote) {
+  FloatingActionButton? _floatingActionButton(BuildContext context, bool canAddNote) {
     if (canAddNote) {
       return FloatingActionButton(
         onPressed: _addNote,
