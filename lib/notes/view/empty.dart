@@ -25,27 +25,37 @@ class Empty extends StatelessWidget {
         Text(
           S.of(context).hello(S.of(context).appName),
           style: Theme.of(context).textTheme.headline2,
+          textAlign: TextAlign.center,
         ),
         SizedBox.fromSize(
           size: const Size.fromHeight(20),
         ),
-        Text(
-          S.of(context).addNotebookHint,
-          style: Theme.of(context).textTheme.bodyMedium,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            S.of(context).addNotebookHint,
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
         ),
       ];
     } else {
       return <Widget>[
         Text(
-          S.of(context).hello(S.of(context).appName),
+          S.of(context).noNotes,
           style: Theme.of(context).textTheme.headline2,
+          textAlign: TextAlign.center,
         ),
         SizedBox.fromSize(
           size: const Size.fromHeight(20),
         ),
-        Text(
-          S.of(context).addNoteHint,
-          style: Theme.of(context).textTheme.bodyMedium,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            S.of(context).addNoteHint,
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
         ),
       ];
     }

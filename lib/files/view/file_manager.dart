@@ -141,11 +141,26 @@ class _FileManagerState extends State<FileManager> {
               ),
             );
           } else {
-            return Center(
-              child: Text(
-                S.of(context).noNotebooks,
-                style: TextStyle(color: Theme.of(context).hintColor),
-              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  S.of(context).noNotebooks,
+                  style: Theme.of(context).textTheme.headline4,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox.fromSize(
+                  size: const Size.fromHeight(20),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    S.of(context).noNotebooksHint,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             );
           }
         });

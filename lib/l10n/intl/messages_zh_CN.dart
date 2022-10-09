@@ -27,10 +27,10 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("新建笔记"),
-        "addNoteHint": MessageLookupByLibrary.simpleMessage("点击右下角按钮创建第一个笔记吧"),
+        "addNoteHint": MessageLookupByLibrary.simpleMessage("点击右下角按钮\n创建第一个笔记"),
         "addNotebook": MessageLookupByLibrary.simpleMessage("新建笔记本"),
         "addNotebookHint":
-            MessageLookupByLibrary.simpleMessage("打开左侧菜单创建或选择一个笔记本"),
+            MessageLookupByLibrary.simpleMessage("打开左侧菜单\n创建或选择一个笔记本"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteConfirmMessage": m0,
@@ -42,6 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "moveTo": MessageLookupByLibrary.simpleMessage("移动到笔记本"),
         "nameInputHint": MessageLookupByLibrary.simpleMessage("未命名笔记本"),
         "noNotebooks": MessageLookupByLibrary.simpleMessage("没有笔记本"),
+        "noNotebooksHint":
+            MessageLookupByLibrary.simpleMessage("点击添加按钮\n创建第一个笔记本"),
+        "noNotes": MessageLookupByLibrary.simpleMessage("没有笔记"),
         "notebooks": MessageLookupByLibrary.simpleMessage("所有笔记本"),
         "rename": MessageLookupByLibrary.simpleMessage("重命名"),
         "renameNote": MessageLookupByLibrary.simpleMessage("重命名笔记"),

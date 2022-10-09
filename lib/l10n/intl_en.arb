@@ -11,6 +11,10 @@
             "name": {}
         }
     },
+    "noNotes": "No notes",
+    "@noNotes": {
+        "description": "A hint when notebook is empty"
+    },
     "addNotebookHint": "Open drawer on the left to create or select a notebook",
     "@addNotebookHint": {
         "description": "A help message to create notebook"
@@ -73,6 +77,10 @@
     "noNotebooks": "No notebooks",
     "@noNotebooks": {
         "description": "Message: no notebooks"
+    },
+    "noNotebooksHint": "Click the add button to create your first notebook",
+    "@noNotebooksHint": {
+        "description": "Message: no notebooks help message"
     },
     "settings": "Settings",
     "@settings": {

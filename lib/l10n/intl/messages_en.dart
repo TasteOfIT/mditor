@@ -43,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "moveTo": MessageLookupByLibrary.simpleMessage("Move to notebook"),
         "nameInputHint": MessageLookupByLibrary.simpleMessage("Untitled"),
         "noNotebooks": MessageLookupByLibrary.simpleMessage("No notebooks"),
+        "noNotebooksHint": MessageLookupByLibrary.simpleMessage(
+            "Click the add button to create your first notebook"),
+        "noNotes": MessageLookupByLibrary.simpleMessage("No notes"),
         "notebooks": MessageLookupByLibrary.simpleMessage("Notebooks"),
         "rename": MessageLookupByLibrary.simpleMessage("Rename"),
         "renameNote": MessageLookupByLibrary.simpleMessage("Rename note"),
