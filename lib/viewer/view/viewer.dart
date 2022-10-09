@@ -4,6 +4,7 @@ import 'package:markdown/markdown.dart' hide Text;
 
 import '../../app/app.dart';
 import '../../widgets/app_bar.dart';
+import '../models/doc.dart';
 
 class Viewer extends StatefulWidget {
   const Viewer({Key? key, this.title = '', this.content = ''}) : super(key: key);
@@ -22,7 +23,10 @@ class _ViewerState extends State<Viewer> {
   Widget build(BuildContext context) {
     final doc = Routes.getData() as Doc?;
     return Scaffold(
-      appBar: AppBarBuilder.get(doc == null ? widget.title : doc.title, const []),
+      appBar: AppBarBuilder.get(
+        doc == null ? widget.title : doc.title,
+        [ActionData(Icons.edit_outlined, _editNote)],
+      ),
       body: Padding(
         padding: const EdgeInsets.only(right: 16.0),
         child: HtmlWidget(
@@ -31,5 +35,9 @@ class _ViewerState extends State<Viewer> {
         ),
       ),
     );
+  }
+
+  void _editNote() {
+    Routes.pop();
   }
 }

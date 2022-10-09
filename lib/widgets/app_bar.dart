@@ -12,30 +12,6 @@ class AppBarBuilder {
       }).toList(),
     );
   }
-
-  static AppBar withDrawer(
-    BuildContext context,
-    String title,
-    VoidCallback openDrawer, {
-    List<ActionData> actions = const [],
-  }) {
-    return AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: openDrawer,
-        tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-      ),
-      title: Text(title),
-      actions: actions.map((action) {
-        return ActionMenu(
-          icon: action.icon,
-          pressCallback: action.callback,
-          color: action.color,
-        );
-      }).toList(),
-      automaticallyImplyLeading: false,
-    );
-  }
 }
 
 class ActionData extends Equatable {

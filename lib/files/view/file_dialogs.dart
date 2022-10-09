@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../l10n/wording.dart';
-import 'view_dialogs.dart';
+import '../../l10n/wording.dart';
+import '../../widgets/view_dialogs.dart';
 
 class FileDialogs {
   static Future<void> addNotebook(BuildContext context, void Function(String) onAction) async {

@@ -1,16 +1,17 @@
+import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../design/locale.dart';
 import '../design/theme.dart';
+import '../files/files.dart';
 import '../l10n/wording.dart';
 import 'app_routes.dart';
 
 export 'app_bloc_observer.dart';
 export 'app_routes.dart';
 export 'log.dart';
-export 'models/doc.dart';
 export 'platform.dart';
 
 class MyApp extends StatelessWidget {
@@ -19,8 +20,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modular.setInitialRoute(Routes.routeNotes);
-    return BlocProvider(
-      create: (_) => ThemeModeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ThemeModeCubit()),
+        BlocProvider(create: (_) => WorkingCubit()),
+      ],
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, themeMode) {
         return AppView(themeMode: themeMode);
       }),
@@ -35,15 +39,25 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      onGenerateTitle: (context) => S.of(context).appName,
-      localizationsDelegates: localizationDelegates,
-      supportedLocales: S.delegate.supportedLocales,
-      themeMode: themeMode,
-      theme: MditorTheme.light,
-      darkTheme: MditorTheme.dark,
-      routeInformationParser: Modular.routeInformationParser,
-      routerDelegate: Modular.routerDelegate,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<NotebookRepository>(
+          create: (_) => Modular.get<NotebookRepository>(),
+        ),
+        RepositoryProvider<NoteRepository>(
+          create: (_) => Modular.get<NoteRepository>(),
+        ),
+      ],
+      child: MaterialApp.router(
+        onGenerateTitle: (context) => S.of(context).appName,
+        localizationsDelegates: localizationDelegates,
+        supportedLocales: S.delegate.supportedLocales,
+        themeMode: themeMode,
+        theme: MditorTheme.light,
+        darkTheme: MditorTheme.dark,
+        routeInformationParser: Modular.routeInformationParser,
+        routerDelegate: Modular.routerDelegate,
+      ),
     );
   }
 }

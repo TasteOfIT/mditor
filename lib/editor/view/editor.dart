@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/app.dart';
-import '../../design/theme.dart';
-import '../../home/bloc/working_cubit.dart';
+import '../../files/files.dart';
 import '../../l10n/wording.dart';
+import '../../viewer/viewer.dart';
 import '../../widgets/app_bar.dart';
-import '../../widgets/file_dialogs.dart';
 import '../bloc/note_content_bloc.dart';
 
 class Editor extends StatefulWidget {
@@ -64,10 +63,6 @@ class _EditorState extends State<Editor> {
     Routes.open(Routes.routeNotes);
   }
 
-  void _openDrawer() {
-    context.read<AppDrawerCubit>().openDrawer();
-  }
-
   void _rename() async {
     await FileDialogs.renameNote(context, _title, (name) {
       _noteContentBloc.add(ChangeNoteTitle(_noteId, name));
@@ -104,18 +99,8 @@ class _EditorState extends State<Editor> {
         _updateNote(state);
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBarBuilder.withDrawer(
-            context,
-            _formatTitle(),
-            _openDrawer,
-            actions: [
-              ActionData(Icons.preview, _preview),
-              ActionData(Icons.edit_outlined, _rename),
-              ActionData(Icons.delete_outline_rounded, _delete, color: Theme.of(context).errorColor),
-            ],
-          ),
-          body: TextField(
+        return FilesDrawerScaffold(
+          TextField(
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               hintText: S.of(context).inputHint,
@@ -125,6 +110,14 @@ class _EditorState extends State<Editor> {
             keyboardType: TextInputType.multiline,
             autofocus: true,
             controller: _controller,
+          ),
+          appBar: AppBarBuilder.get(
+            _formatTitle(),
+            [
+              ActionData(Icons.preview, _preview),
+              ActionData(Icons.edit_outlined, _rename),
+              ActionData(Icons.delete_outline_rounded, _delete, color: Theme.of(context).errorColor),
+            ],
           ),
         );
       },

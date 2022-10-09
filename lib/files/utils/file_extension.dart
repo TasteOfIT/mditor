@@ -9,7 +9,7 @@ Comparator<FileNode> nodeComparator = (left, right) {
   return (left.data?.createdTime ?? 0).compareTo(right.data?.createdTime ?? 0);
 };
 
-class NodeMapper {
+class FilesExt {
   static List<FileNode> of(List<File> notebooks, List<File> notes) {
     List<FileNode> allNodes = _fromNotebooks(notebooks) + _fromItems(notes);
     allNodes.sort(nodeComparator);

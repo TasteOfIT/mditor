@@ -6,12 +6,12 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 import '../../app/app.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/dividers.dart';
-import '../../widgets/file_dialogs.dart';
 import '../../widgets/icon_text_menu.dart';
 import '../../widgets/tree/file_tree.dart';
 import '../bloc/file_list_bloc.dart';
 import '../bloc/working_cubit.dart';
-import '../utils/node_extension.dart';
+import '../utils/file_extension.dart';
+import 'file_dialogs.dart';
 
 class FileManager extends StatefulWidget {
   const FileManager({super.key});
@@ -261,7 +261,7 @@ class _FileManagerState extends State<FileManager> {
 
   void _onFileListChanged(BuildContext context, FileListState state) {
     if (state is FileListLoaded) {
-      _fileTreeCubit.set(NodeMapper.of(state.notebooks, state.notes));
+      _fileTreeCubit.set(FilesExt.of(state.notebooks, state.notes));
     } else if (state is FileLoadError) {
       Log.d('Load files error ${state.message}');
     } else if (state is FileAdded) {
