@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `No notes`
+  String get noNotes {
+    return Intl.message(
+      'No notes',
+      name: 'noNotes',
+      desc: 'A hint when notebook is empty',
+      args: [],
+    );
+  }
+
   /// `Open drawer on the left to create or select a notebook`
   String get addNotebookHint {
     return Intl.message(
@@ -216,6 +226,16 @@ class S {
       'No notebooks',
       name: 'noNotebooks',
       desc: 'Message: no notebooks',
+      args: [],
+    );
+  }
+
+  /// `Click the add button to create your first notebook`
+  String get noNotebooksHint {
+    return Intl.message(
+      'Click the add button to create your first notebook',
+      name: 'noNotebooksHint',
+      desc: 'Message: no notebooks help message',
       args: [],
     );
   }
