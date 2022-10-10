@@ -24,6 +24,7 @@ class _FileManagerState extends State<FileManager> {
   late FileListBloc _fileListBloc;
   late FileTreeCubit _fileTreeCubit;
   late WorkingCubit _workingCubit;
+  bool _isFileListEmpty = true;
 
   @override
   void initState() {
@@ -60,7 +61,7 @@ class _FileManagerState extends State<FileManager> {
 
   Future<void> _deleteNotebook(File file) async {
     await FileDialogs.deleteFile(context, file.label, () {
-      _fileListBloc.add(DeleteNotebook(file.id ?? ''));
+      _fileListBloc.add(DeleteNotebook(file.id ?? '', file.parentId));
     });
   }
 
@@ -85,7 +86,7 @@ class _FileManagerState extends State<FileManager> {
 
   Future<void> _deleteNote(File file) async {
     await FileDialogs.deleteFile(context, file.label, () {
-      _fileListBloc.add(DeleteNote(file.id ?? ''));
+      _fileListBloc.add(DeleteNote(file.id ?? '', file.parentId));
     });
   }
 
@@ -115,55 +116,43 @@ class _FileManagerState extends State<FileManager> {
   }
 
   Widget _fileList(BuildContext context) {
-    return BlocBuilder<FileListBloc, FileListState>(
-        buildWhen: (previous, current) => current is FileListLoaded,
-        builder: (context, state) {
-          List<File> files = List.empty();
-          if (state is FileListLoaded) {
-            files = state.notebooks + state.notes;
-          }
-          if (files.isNotEmpty) {
-            return BlocProvider(
-              create: (_) => _fileTreeCubit,
-              child: BlocBuilder<FileListBloc, FileListState>(
-                builder: (context, state) {
-                  return FileTree(
-                    onNodeTap: _handleFileSelected,
-                    onNodeDoubleTap: _handleFileDoubleTap,
-                    onExpansionChanged: _handleFolderExpansion,
-                    notebookOptions: _notebookOptions(),
-                    notebookOptionSelected: _onNotebookOptionSelected,
-                    noteOptions: _noteOptions(),
-                    noteOptionSelected: _onNoteOptionSelected,
-                    supportParentDoubleTap: true,
-                  );
-                },
-              ),
-            );
-          } else {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  S.of(context).noNotebooks,
-                  style: Theme.of(context).textTheme.headline4,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox.fromSize(
-                  size: const Size.fromHeight(20),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    S.of(context).noNotebooksHint,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            );
-          }
-        });
+    if (!_isFileListEmpty) {
+      return BlocProvider(
+        create: (_) => _fileTreeCubit,
+        child: FileTree(
+          onNodeTap: _handleFileSelected,
+          onNodeDoubleTap: _handleFileDoubleTap,
+          onExpansionChanged: _handleFolderExpansion,
+          notebookOptions: _notebookOptions(),
+          notebookOptionSelected: _onNotebookOptionSelected,
+          noteOptions: _noteOptions(),
+          noteOptionSelected: _onNoteOptionSelected,
+          supportParentDoubleTap: true,
+        ),
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            S.of(context).noNotebooks,
+            style: Theme.of(context).textTheme.headline4,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox.fromSize(
+            size: const Size.fromHeight(20),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              S.of(context).noNotebooksHint,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   void _handleFileSelected(TreeViewController controller, String id) {
@@ -276,7 +265,8 @@ class _FileManagerState extends State<FileManager> {
 
   void _onFileListChanged(BuildContext context, FileListState state) {
     if (state is FileListLoaded) {
-      _fileTreeCubit.set(FilesExt.of(state.notebooks, state.notes));
+      List<FileNode> files = FilesExt.of(state.notebooks, state.notes);
+      _fileTreeCubit.set(files);
     } else if (state is FileLoadError) {
       Log.d('Load files error ${state.message}');
     } else if (state is FileAdded) {
@@ -294,9 +284,17 @@ class _FileManagerState extends State<FileManager> {
       _fileTreeCubit.update(state.file);
     } else if (state is FileDeleted) {
       _fileTreeCubit.delete(state.id);
+      if (_workingCubit.state.notebookId == state.id) {
+        _workingCubit.cd(state.parentId);
+      } else if (_workingCubit.state.noteId == state.id) {
+        _openNotebook(state.parentId ?? '');
+      }
     } else if (state is FileOpError) {
       Log.d('File op error ${state.message}');
     }
+    setState(() {
+      _isFileListEmpty = _fileTreeCubit.state.children.isEmpty;
+    });
   }
 
   @override

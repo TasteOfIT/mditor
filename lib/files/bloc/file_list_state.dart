@@ -46,11 +46,12 @@ class FileChanged extends FileListState {
 
 class FileDeleted extends FileListState {
   final String id;
+  final String? parentId;
 
-  const FileDeleted(this.id);
+  const FileDeleted(this.id, this.parentId);
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, parentId];
 }
 
 //todo: add error handling

@@ -86,7 +86,7 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
       int result = await _notebookRepo.removeNotebook(event.id);
       Log.d('Delete notebook $result');
       if (result == 1) {
-        emit(FileDeleted(event.id));
+        emit(FileDeleted(event.id, event.parentId));
       }
     }
   }
@@ -120,7 +120,7 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
       int result = await _noteRepo.removeNote(event.id);
       Log.d('Delete note $result');
       if (result == 1) {
-        emit(FileDeleted(event.id));
+        emit(FileDeleted(event.id, event.parentId));
       }
     }
   }
