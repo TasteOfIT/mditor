@@ -82,7 +82,6 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
 
   void _deleteNotebook(DeleteNotebook event, Emitter<FileListState> emit) async {
     if (event.id.isNotEmpty) {
-      // todo: delete all children
       int result = await _notebookRepo.removeNotebook(event.id);
       Log.d('Delete notebook $result');
       if (result == 1) {

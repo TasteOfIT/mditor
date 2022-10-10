@@ -51,6 +51,14 @@ class NotebookRepository extends LocalDataSource {
   }
 
   Future<int> removeNotebook(String id) {
-    return database.folderDao.removeFolder(id);
+    return database.folderDao.removeFolder(id).then((value) {
+      if (value == 1) {
+        database.folderDao.deleteFolders(id);
+        database.noteDao.deleteNotes(id);
+        database.folderDao.removeOrphans();
+        database.noteDao.removeOrphans();
+      }
+      return value;
+    });
   }
 }
