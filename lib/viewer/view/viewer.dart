@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:markdown/markdown.dart' hide Text;
+import 'package:markdown_viewer/widgets/markdown_viewer.dart';
 
 import '../../app/app.dart';
 import '../../widgets/app_bar.dart';
 import '../models/doc.dart';
 
 class Viewer extends StatefulWidget {
-  const Viewer({Key? key, this.title = '', this.content = ''}) : super(key: key);
+  const Viewer({Key? key, this.title = '', this.content = ''})
+      : super(key: key);
 
   final String title;
   final String content;
@@ -28,11 +30,9 @@ class _ViewerState extends State<Viewer> {
         [ActionData(Icons.edit_outlined, _editNote)],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 16.0),
-        child: HtmlWidget(
-          markdownToHtml(doc == null ? widget.content : doc.content),
-          textStyle: const TextStyle(fontSize: 14),
-        ),
+        padding: const EdgeInsets.all(16.0),
+        child:
+            MarkDownViewer(content: doc == null ? widget.content : doc.content),
       ),
     );
   }
