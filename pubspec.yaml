@@ -58,6 +58,9 @@ dependencies:
   data:
     path: packages/data
 
+  markdown_viewer:
+    path: packages/markdown_viewer
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
