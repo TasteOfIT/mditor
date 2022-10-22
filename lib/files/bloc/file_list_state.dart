@@ -54,6 +54,15 @@ class FileDeleted extends FileListState {
   List<Object?> get props => [id, parentId];
 }
 
+class FileMoved extends FileListState {
+  final String parentId;
+
+  const FileMoved(this.parentId);
+
+  @override
+  List<Object?> get props => [parentId];
+}
+
 //todo: add error handling
 class FileOpError extends FileListState {
   final String message;

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../app/app.dart';
 import '../../files/view/file_dialogs.dart';
 import '../../l10n/wording.dart';
-import '../../widgets/tree/file.dart';
+import '../../widgets/model/file.dart';
 import '../bloc/notes_bloc.dart';
 
 class NotesList extends StatelessWidget {
@@ -68,14 +68,17 @@ class NotesList extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20, bottom: 8, left: 20, right: 20),
               child: Icon(icon, size: 80),
             ),
-            SizedBox(
-              width: 128,
-              child: Text(
-                file.label,
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: const EdgeInsets.only(left: 4, right: 4),
+              child: SizedBox(
+                width: 120,
+                child: Text(
+                  file.label,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],
@@ -157,8 +160,9 @@ class NotesList extends StatelessWidget {
       _opButton(
         Icons.drive_file_move_outlined,
         S.of(context).moveTo,
-        () {
+        () async {
           controller.currentState?.toggleCard();
+          _openPicker(file.id, file.isFolder);
         },
       ),
     ];
@@ -192,11 +196,24 @@ class NotesList extends StatelessWidget {
       _opButton(
         Icons.drive_file_move_outlined,
         S.of(context).moveTo,
-        () {
+        () async {
           controller.currentState?.toggleCard();
+          _openPicker(file.id, file.isFolder);
         },
       ),
     ];
+  }
+
+  void _openPicker(String? id, bool isFolder) async {
+    if (id != null && id.isNotEmpty == true) {
+      String newParent = await Routes.add(Routes.routePicker, args: id) ?? '';
+      Log.d('Picked $newParent for $id');
+      if (isFolder) {
+        notesBloc.add(MoveNotebook(id, newParent));
+      } else {
+        notesBloc.add(MoveNote(id, newParent));
+      }
+    }
   }
 
   Widget _opButton(IconData icon, String label, void Function()? onPressed) {

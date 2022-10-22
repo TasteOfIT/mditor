@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../l10n/wording.dart';
-import 'file.dart';
+import '../model/file.dart';
 import 'file_tree.dart';
 
 class FileTreeItem<File> extends StatelessWidget {
@@ -65,15 +65,19 @@ class FileTreeItem<File> extends StatelessWidget {
   }
 
   Widget _trailingIcon(BuildContext context) {
-    return PopupMenuButton(
-      icon: const Icon(Icons.more_vert_outlined),
-      itemBuilder: (_) {
-        return optionMenu.map(_buildPopupMenuItem).toList();
-      },
-      onSelected: (value) {
-        optionSelected?.call(value as int, node.data as File);
-      },
-    );
+    if (optionMenu.isNotEmpty) {
+      return PopupMenuButton(
+        icon: const Icon(Icons.more_vert_outlined),
+        itemBuilder: (_) {
+          return optionMenu.map(_buildPopupMenuItem).toList();
+        },
+        onSelected: (value) {
+          optionSelected?.call(value as int, node.data as File);
+        },
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   PopupMenuItem _buildPopupMenuItem(MenuData menu) {

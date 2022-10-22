@@ -1,7 +1,7 @@
 import 'package:data/data.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
-import '../../widgets/tree/file.dart';
+import '../../widgets/model/file.dart';
 
 const FileNode empty = Node(key: '', label: '');
 
@@ -10,17 +10,22 @@ Comparator<FileNode> nodeComparator = (left, right) {
 };
 
 class FilesExt {
-  static List<FileNode> of(List<File> notebooks, List<File> notes) {
+  static List<FileNode> of(
+    List<File> notebooks, {
+    List<File> notes = const [],
+    List<String> excludedIds = const [],
+  }) {
     List<FileNode> allNodes = _fromNotebooks(notebooks) + _fromItems(notes);
     allNodes.sort(nodeComparator);
 
     List<FileNode> result = List.empty(growable: true);
     Map<String, List<FileNode>> children = {};
     for (var node in allNodes) {
+      if (excludedIds.contains(node.key)) continue;
       String parentKey = node.data?.parentId ?? empty.key;
       (children.putIfAbsent(parentKey, () => List.empty(growable: true))).add(node);
     }
-    result.addAll(_wrapUpNodeTree(children));
+    result.addAll(_wrapUpNodeTree(children, excludedIds: excludedIds));
     return result;
   }
 
@@ -36,21 +41,30 @@ class FilesExt {
     }).toList(growable: false);
   }
 
-  static List<FileNode> _wrapUpNodeTree(Map<String, List<FileNode>> remnantNodes) {
+  static List<FileNode> _wrapUpNodeTree(
+    Map<String, List<FileNode>> remnantNodes, {
+    List<String> excludedIds = const [],
+  }) {
     Map<String, List<FileNode>> currentLeaves = {};
     while (remnantNodes.isNotEmpty) {
-      _moveNodesToLeaves(remnantNodes, currentLeaves);
+      _moveNodesToLeaves(remnantNodes, currentLeaves, excludedIds: excludedIds);
     }
     return currentLeaves[empty.key] ?? List.empty();
   }
 
-  static void _moveNodesToLeaves(Map<String, List<FileNode>> remnantNodes, Map<String, List<FileNode>> currentLeaves) {
+  static void _moveNodesToLeaves(
+    Map<String, List<FileNode>> remnantNodes,
+    Map<String, List<FileNode>> currentLeaves, {
+    List<String> excludedIds = const [],
+  }) {
     for (var key in remnantNodes.keys.toList(growable: false)) {
       var isParent = remnantNodes[key]?.any((note) => remnantNodes.containsKey(note.key)) ?? false;
       if (!isParent) {
         var leafNodes = remnantNodes.remove(key) ?? List.empty();
-        leafNodes.sort(nodeComparator);
-        _insertIntoLeaves(currentLeaves, key, leafNodes);
+        if (key.isEmpty || !excludedIds.contains(key)) {
+          leafNodes.sort(nodeComparator);
+          _insertIntoLeaves(currentLeaves, key, leafNodes);
+        }
       }
     }
   }

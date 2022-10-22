@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../app/app.dart';
 import '../../files/files.dart';
-import '../../widgets/tree/file.dart';
+import '../../widgets/model/file.dart';
 
 part 'notes_event.dart';
 
@@ -36,9 +36,11 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     on<AddNote>(_addNote);
     on<RenameNote>(_renameNote);
     on<DeleteNote>(_deleteNote);
+    on<MoveNote>(_moveNote);
     on<AddNotebook>(_addNotebook);
     on<RenameNotebook>(_renameNotebook);
     on<DeleteNotebook>(_deleteNotebook);
+    on<MoveNotebook>(_moveNotebook);
   }
 
   void _loadNotes(LoadNotes event, Emitter<NotesState> emit) async {
@@ -88,6 +90,13 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     }
   }
 
+  void _moveNotebook(MoveNotebook event, Emitter<NotesState> emit) async {
+    if (event.id.isNotEmpty && event.parentId.trim().isNotEmpty) {
+      int result = await _notebookRepo.moveNotebook(event.id, event.parentId.trim());
+      Log.d('Move notebook $result');
+    }
+  }
+
   void _addNote(AddNote event, Emitter<NotesState> emit) async {
     assert(_currentNotebook?.id?.isNotEmpty == true);
     String noteId = await _noteRepo.addNote(_currentNotebook?.id ?? '', '', '');
@@ -101,7 +110,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     assert(_currentNotebook?.id?.isNotEmpty == true);
     if (event.id.isNotEmpty && event.name.trim().isNotEmpty) {
       int result = await _noteRepo.updateTitle(event.id, event.name.trim());
-      Log.d(' Update note $result');
+      Log.d('Update note $result');
     }
   }
 
@@ -110,6 +119,13 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     if (event.id.isNotEmpty) {
       int result = await _noteRepo.removeNote(event.id);
       Log.d('Delete note $result');
+    }
+  }
+
+  void _moveNote(MoveNote event, Emitter<NotesState> emit) async {
+    if (event.id.isNotEmpty && event.parentId.trim().isNotEmpty) {
+      int result = await _noteRepo.moveNote(event.id, event.parentId.trim());
+      Log.d('Move note $result');
     }
   }
 
