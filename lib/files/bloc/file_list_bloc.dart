@@ -25,9 +25,11 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
     on<AddNotebook>(_addNotebook);
     on<RenameNotebook>(_renameNotebook);
     on<DeleteNotebook>(_deleteNotebook);
+    on<MoveNotebook>(_moveNotebook);
     on<AddNote>(_addNote);
     on<RenameNote>(_renameNote);
     on<DeleteNote>(_deleteNote);
+    on<MoveNote>(_moveNote);
   }
 
   void _onRefresh(LoadFileList event, Emitter<FileListState> emit) async {
@@ -90,6 +92,18 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
     }
   }
 
+  void _moveNotebook(MoveNotebook event, Emitter<FileListState> emit) async {
+    if (event.id.isNotEmpty && event.parentId.trim().isNotEmpty) {
+      int result = await _notebookRepo.moveNotebook(event.id, event.parentId.trim());
+      Log.d('Move notebook $result');
+      if (result == 1) {
+        emit(FileMoved(event.parentId));
+      } else {
+        emit(const FileOpError('Failed to move notebook'));
+      }
+    }
+  }
+
   void _addNote(AddNote event, Emitter<FileListState> emit) async {
     String noteId = await _noteRepo.addNote(event.parentId, '', '');
     Log.d('Insert note $noteId');
@@ -104,7 +118,7 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
   void _renameNote(RenameNote event, Emitter<FileListState> emit) async {
     if (event.id.isNotEmpty && event.name.trim().isNotEmpty) {
       int result = await _noteRepo.updateTitle(event.id, event.name.trim());
-      Log.d(' Update note $result');
+      Log.d('Update note $result');
       if (result == 1) {
         FileNode? note = await _getNote(event.id);
         if (note != null) {
@@ -120,6 +134,18 @@ class FileListBloc extends Bloc<FileListEvent, FileListState> {
       Log.d('Delete note $result');
       if (result == 1) {
         emit(FileDeleted(event.id, event.parentId));
+      }
+    }
+  }
+
+  void _moveNote(MoveNote event, Emitter<FileListState> emit) async {
+    if (event.id.isNotEmpty && event.parentId.trim().isNotEmpty) {
+      int result = await _noteRepo.moveNote(event.id, event.parentId.trim());
+      Log.d('Move note $result');
+      if (result == 1) {
+        emit(FileMoved(event.parentId));
+      } else {
+        emit(const FileOpError('Failed to move note'));
       }
     }
   }

@@ -90,6 +90,18 @@ class _FileManagerState extends State<FileManager> {
     });
   }
 
+  void _openPicker(String? id, bool isFolder) async {
+    if (id != null && id.isNotEmpty == true) {
+      String newParent = await Routes.add(Routes.routePicker, args: id) ?? '';
+      Log.d('Picked $newParent for $id');
+      if (isFolder) {
+        _fileListBloc.add(MoveNotebook(id, newParent));
+      } else {
+        _fileListBloc.add(MoveNote(id, newParent));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FileListBloc>(
@@ -217,6 +229,7 @@ class _FileManagerState extends State<FileManager> {
         }
       case 4:
         {
+          _openPicker(file.id, file.isFolder);
           break;
         }
       default:
@@ -244,6 +257,7 @@ class _FileManagerState extends State<FileManager> {
         }
       case 1:
         {
+          _openPicker(file.id, file.isFolder);
           break;
         }
       case 2:
@@ -265,7 +279,7 @@ class _FileManagerState extends State<FileManager> {
 
   void _onFileListChanged(BuildContext context, FileListState state) {
     if (state is FileListLoaded) {
-      List<FileNode> files = FilesExt.of(state.notebooks, state.notes);
+      List<FileNode> files = FilesExt.of(state.notebooks, notes: state.notes);
       _fileTreeCubit.set(files);
     } else if (state is FileLoadError) {
       Log.d('Load files error ${state.message}');
@@ -289,6 +303,9 @@ class _FileManagerState extends State<FileManager> {
       } else if (_workingCubit.state.noteId == state.id) {
         _openNotebook(state.parentId ?? '');
       }
+    } else if (state is FileMoved) {
+      _workingCubit.cd(state.parentId);
+      _openNotebook(state.parentId);
     } else if (state is FileOpError) {
       Log.d('File op error ${state.message}');
     }

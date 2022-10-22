@@ -39,6 +39,16 @@ class DeleteNotebook extends FileListEvent {
   List<Object?> get props => [id, parentId];
 }
 
+class MoveNotebook extends FileListEvent {
+  final String id;
+  final String parentId;
+
+  const MoveNotebook(this.id, this.parentId);
+
+  @override
+  List<Object?> get props => [id, parentId];
+}
+
 class AddNote extends FileListEvent {
   final String parentId;
 
@@ -63,6 +73,16 @@ class DeleteNote extends FileListEvent {
   final String parentId;
 
   const DeleteNote(this.id, this.parentId);
+
+  @override
+  List<Object?> get props => [id, parentId];
+}
+
+class MoveNote extends FileListEvent {
+  final String id;
+  final String parentId;
+
+  const MoveNote(this.id, this.parentId);
 
   @override
   List<Object?> get props => [id, parentId];

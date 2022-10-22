@@ -48,6 +48,16 @@ class DeleteNote extends NotesEvent {
   List<Object?> get props => [id];
 }
 
+class MoveNote extends NotesEvent {
+  final String id;
+  final String parentId;
+
+  const MoveNote(this.id, this.parentId);
+
+  @override
+  List<Object?> get props => [id, parentId];
+}
+
 class AddNotebook extends NotesEvent {
   final String id;
   final String name;
@@ -66,6 +76,16 @@ class RenameNotebook extends NotesEvent {
 
   @override
   List<Object?> get props => [id, name];
+}
+
+class MoveNotebook extends NotesEvent {
+  final String id;
+  final String parentId;
+
+  const MoveNotebook(this.id, this.parentId);
+
+  @override
+  List<Object?> get props => [id, parentId];
 }
 
 class DeleteNotebook extends NotesEvent {

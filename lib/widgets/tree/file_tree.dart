@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
-import 'file.dart';
+import '../model/file.dart';
 import 'file_tree_cubit.dart';
 import 'file_tree_item.dart';
 
-export 'file.dart';
+export '../model/file.dart';
 export 'file_tree_cubit.dart';
 export 'file_tree_item.dart';
 

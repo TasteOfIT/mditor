@@ -1,30 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
-import '../model/file.dart';
-
-class FileTreeCubit extends Cubit<TreeViewController> {
-  FileTreeCubit(super.initialState) : super();
+class FilePickerCubit extends Cubit<TreeViewController> {
+  FilePickerCubit(super.initialState) : super();
 
   void set(List<Node> files) => emit(TreeViewController(children: files));
 
-  void addToRoot(FileNode node) {
-    List<FileNode> newChildren = List.from(state.children, growable: true);
-    newChildren.add(node);
-    emit(state.copyWith(children: newChildren));
-  }
-
-  void add(String parentKey, FileNode node) => emit(state.withAddNode(parentKey, node));
-
-  void delete(String key) => emit(state.withDeleteNode(key));
-
-  void update(FileNode node) {
-    Node? currentNode = state.getNode(node.key);
-    if (currentNode != null) {
-      Node newNode = node.copyWith(children: currentNode.children);
-      emit(state.withUpdateNode(newNode.key, newNode));
-    }
-  }
+  void select(String key) => emit(state.copyWith(selectedKey: key));
 
   void expand(String key, bool expanded) {
     Node? node = state.getNode(key);
