@@ -23,26 +23,23 @@ class FileTreeItem<File> extends StatelessWidget {
     if (label.trim().isEmpty) {
       label = S.of(context).nameInputHint;
     }
-    return Padding(
-      padding: const EdgeInsets.only(right: 12),
-      child: Row(
-        children: [
-          _leadingIcon(context),
-          Expanded(
-            flex: 1,
-            child: Text(
-              node.label,
-              maxLines: 1,
-              style: const TextStyle(
-                fontSize: 14,
-                letterSpacing: 0.3,
-                overflow: TextOverflow.clip,
-              ),
+    return Row(
+      children: [
+        _leadingIcon(context),
+        Expanded(
+          flex: 1,
+          child: Text(
+            node.label,
+            maxLines: 1,
+            style: const TextStyle(
+              fontSize: 14,
+              letterSpacing: 0.3,
+              overflow: TextOverflow.clip,
             ),
           ),
-          _trailingIcon(context),
-        ],
-      ),
+        ),
+        _trailingIcon(context),
+      ],
     );
   }
 

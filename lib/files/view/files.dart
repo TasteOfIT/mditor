@@ -23,8 +23,6 @@ class FilesDrawerScaffold extends StatelessWidget {
   final DrawerCallback? onDrawerChanged;
   final Color? backgroundColor;
 
-  void _openSettings() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +32,20 @@ class FilesDrawerScaffold extends StatelessWidget {
       floatingActionButtonLocation: floatingActionButtonLocation,
       backgroundColor: backgroundColor,
       onDrawerChanged: onDrawerChanged,
-      drawer: Drawer(
+      drawer: _FileDrawer(),
+    );
+  }
+}
+
+class _FileDrawer extends StatelessWidget {
+  void _openSettings(BuildContext context) {
+    Scaffold.of(context).closeDrawer();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SafeArea(
         child: Column(
           children: [
             const Expanded(
@@ -45,8 +56,8 @@ class FilesDrawerScaffold extends StatelessWidget {
             IconTextMenu(
               icon: Icons.settings_applications,
               label: S.of(context).settings,
-              onTap: _openSettings,
-            )
+              onTap: () => _openSettings(context),
+            ),
           ],
         ),
       ),

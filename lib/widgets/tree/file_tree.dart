@@ -74,24 +74,27 @@ class _FileTreeState extends State<FileTree> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FileTreeCubit, TreeViewController>(builder: (context, state) {
-      return TreeView(
-        controller: state,
-        allowParentSelect: false,
-        supportParentDoubleTap: widget.supportParentDoubleTap,
-        onNodeTap: (key) => widget.onNodeTap?.call(state, key),
-        onNodeDoubleTap: (key) => widget.onNodeDoubleTap?.call(state, key),
-        onExpansionChanged: (key, expanded) {
-          _expand(key, expanded);
-          widget.onExpansionChanged?.call(state, key, expanded);
-        },
-        nodeBuilder: _createNode,
-        theme: TreeViewTheme(
-          expanderTheme: const ExpanderThemeData(
-            type: ExpanderType.chevron,
-            modifier: ExpanderModifier.circleOutlined,
-            size: 24,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: TreeView(
+          controller: state,
+          allowParentSelect: false,
+          supportParentDoubleTap: widget.supportParentDoubleTap,
+          onNodeTap: (key) => widget.onNodeTap?.call(state, key),
+          onNodeDoubleTap: (key) => widget.onNodeDoubleTap?.call(state, key),
+          onExpansionChanged: (key, expanded) {
+            _expand(key, expanded);
+            widget.onExpansionChanged?.call(state, key, expanded);
+          },
+          nodeBuilder: _createNode,
+          theme: TreeViewTheme(
+            expanderTheme: const ExpanderThemeData(
+              type: ExpanderType.chevron,
+              modifier: ExpanderModifier.circleOutlined,
+              size: 24,
+            ),
+            colorScheme: Theme.of(context).colorScheme,
           ),
-          colorScheme: Theme.of(context).colorScheme,
         ),
       );
     });
