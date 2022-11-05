@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app.dart';
 import '../../l10n/wording.dart';
 import '../../widgets/dividers.dart';
 import '../../widgets/icon_text_menu.dart';
@@ -40,6 +41,7 @@ class FilesDrawerScaffold extends StatelessWidget {
 class _FileDrawer extends StatelessWidget {
   void _openSettings(BuildContext context) {
     Scaffold.of(context).closeDrawer();
+    Routes.add(Routes.routeSettings);
   }
 
   @override

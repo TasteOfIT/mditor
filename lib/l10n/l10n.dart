@@ -269,6 +269,172 @@ class S {
       args: [],
     );
   }
+
+  /// `Apply`
+  String get buttonLabelApply {
+    return Intl.message(
+      'Apply',
+      name: 'buttonLabelApply',
+      desc: 'Label for button apply',
+      args: [],
+    );
+  }
+
+  /// `Discard`
+  String get buttonLabelDiscard {
+    return Intl.message(
+      'Discard',
+      name: 'buttonLabelDiscard',
+      desc: 'Label for button discard',
+      args: [],
+    );
+  }
+
+  /// `General`
+  String get settingsGeneral {
+    return Intl.message(
+      'General',
+      name: 'settingsGeneral',
+      desc: 'Label for general settings',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get themeMenuLabel {
+    return Intl.message(
+      'Theme',
+      name: 'themeMenuLabel',
+      desc: 'Label for theme options',
+      args: [],
+    );
+  }
+
+  /// `Follow system`
+  String get themeFollowSystem {
+    return Intl.message(
+      'Follow system',
+      name: 'themeFollowSystem',
+      desc: 'Label for theme system',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get themeLight {
+    return Intl.message(
+      'Light',
+      name: 'themeLight',
+      desc: 'Label for theme light',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get themeDark {
+    return Intl.message(
+      'Dark',
+      name: 'themeDark',
+      desc: 'Label for theme dark',
+      args: [],
+    );
+  }
+
+  /// `Synchronization`
+  String get settingsSync {
+    return Intl.message(
+      'Synchronization',
+      name: 'settingsSync',
+      desc: 'Label for synchronization settings',
+      args: [],
+    );
+  }
+
+  /// `Server URL`
+  String get syncServerUrlLabel {
+    return Intl.message(
+      'Server URL',
+      name: 'syncServerUrlLabel',
+      desc: 'Label for synchronization server url',
+      args: [],
+    );
+  }
+
+  /// `Server Email`
+  String get syncServerEmailLabel {
+    return Intl.message(
+      'Server Email',
+      name: 'syncServerEmailLabel',
+      desc: 'Label for synchronization server email',
+      args: [],
+    );
+  }
+
+  /// `Server password`
+  String get syncServerPasswordLabel {
+    return Intl.message(
+      'Server password',
+      name: 'syncServerPasswordLabel',
+      desc: 'Label for synchronization server password',
+      args: [],
+    );
+  }
+
+  /// `Auto sync interval`
+  String get syncInterval {
+    return Intl.message(
+      'Auto sync interval',
+      name: 'syncInterval',
+      desc: 'Label for synchronization interval',
+      args: [],
+    );
+  }
+
+  /// `Disable`
+  String get syncDisabled {
+    return Intl.message(
+      'Disable',
+      name: 'syncDisabled',
+      desc: 'Label for synchronization disabled',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{{count} minute}other{{count} minutes}}`
+  String syncIntervalMinutes(num count) {
+    return Intl.plural(
+      count,
+      one: '$count minute',
+      other: '$count minutes',
+      name: 'syncIntervalMinutes',
+      desc: 'Label for synchronization interval minutes',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{{count} hour}other{{count} hours}}`
+  String syncIntervalHours(num count) {
+    return Intl.plural(
+      count,
+      one: '$count hour',
+      other: '$count hours',
+      name: 'syncIntervalHours',
+      desc: 'Label for synchronization interval hours',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{{count} day}other{{count} days}}`
+  String syncIntervalDays(num count) {
+    return Intl.plural(
+      count,
+      one: '$count day',
+      other: '$count days',
+      name: 'syncIntervalDays',
+      desc: 'Label for synchronization interval days',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

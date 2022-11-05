@@ -21,5 +21,21 @@
     "noNotebooks": "没有笔记本",
     "noNotebooksHint": "点击添加按钮\n创建第一个笔记本",
     "inputHint": "从此开始",
-    "nameInputHint": "未命名笔记本"
+    "nameInputHint": "未命名笔记本",
+    "buttonLabelApply": "应用",
+    "buttonLabelDiscard": "放弃",
+    "themeMenuLabel": "主题",
+    "themeFollowSystem": "跟随系统",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "settingsGeneral": "常用",
+    "settingsSync": "同步",
+    "syncServerUrlLabel": "服务器URL",
+    "syncServerEmailLabel": "服务器Email",
+    "syncServerPasswordLabel": "服务器密码",
+    "syncInterval": "Auto sync interval",
+    "syncDisabled": "Disable",
+    "syncIntervalMinutes": "{count, plural, =1{{count} 分钟}other{{count} 分钟}}",
+    "syncIntervalHours": "{count, plural, =1{{count} 小时}other{{count} 小时}}",
+    "syncIntervalDays": "{count, plural, =1{{count} 天}other{{count} 天}}"
 }

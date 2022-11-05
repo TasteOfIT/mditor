@@ -4,17 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 class ThemeModeCubit extends HydratedCubit<ThemeMode> {
   ThemeModeCubit() : super(ThemeMode.system);
 
-  void enableLight() {
-    emit(ThemeMode.light);
-  }
-
-  void enableDark() {
-    emit(ThemeMode.dark);
-  }
-
-  void followSystem() {
-    emit(ThemeMode.system);
-  }
+  void set(ThemeMode theme) => emit(theme);
 
   @override
   ThemeMode fromJson(Map<String, dynamic> json) {

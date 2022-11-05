@@ -7,6 +7,7 @@ import '../design/locale.dart';
 import '../design/theme.dart';
 import '../files/files.dart';
 import '../l10n/wording.dart';
+import '../settings/settings.dart';
 import 'app_routes.dart';
 
 export 'app_bloc_observer.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => ThemeModeCubit()),
         BlocProvider(create: (_) => WorkingCubit()),
+        BlocProvider(create: (_) => SyncSettingsCubit()),
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeMode>(builder: (context, themeMode) {
         return AppView(themeMode: themeMode);
