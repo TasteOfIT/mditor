@@ -58,12 +58,9 @@ class _FolderPickerState extends State<FolderPicker> {
             S.of(context).moveTo,
             [ActionData(Icons.done_rounded, _onConfirmed)],
           ),
-          body: Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: BlocProvider(
-              create: (_) => _filePickerCubit,
-              child: _folderList(context),
-            ),
+          body: BlocProvider(
+            create: (_) => _filePickerCubit,
+            child: _folderList(context),
           ),
         ),
       ),
