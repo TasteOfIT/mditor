@@ -24,6 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(name) => "嗨, 我是${name}";
 
+  static String m2(count) =>
+      "${Intl.plural(count, one: '${count} 天', other: '${count} 天')}";
+
+  static String m3(count) =>
+      "${Intl.plural(count, one: '${count} 小时', other: '${count} 小时')}";
+
+  static String m4(count) =>
+      "${Intl.plural(count, one: '${count} 分钟', other: '${count} 分钟')}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addNote": MessageLookupByLibrary.simpleMessage("新建笔记"),
@@ -32,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addNotebookHint":
             MessageLookupByLibrary.simpleMessage("打开左侧菜单\n创建或选择一个笔记本"),
         "appName": MessageLookupByLibrary.simpleMessage("Mditor"),
+        "buttonLabelApply": MessageLookupByLibrary.simpleMessage("应用"),
+        "buttonLabelDiscard": MessageLookupByLibrary.simpleMessage("放弃"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteConfirmMessage": m0,
         "edit": MessageLookupByLibrary.simpleMessage("编辑"),
@@ -49,6 +60,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "rename": MessageLookupByLibrary.simpleMessage("重命名"),
         "renameNote": MessageLookupByLibrary.simpleMessage("重命名笔记"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
+        "settingsGeneral": MessageLookupByLibrary.simpleMessage("常用"),
+        "settingsSync": MessageLookupByLibrary.simpleMessage("同步"),
+        "syncDisabled": MessageLookupByLibrary.simpleMessage("Disable"),
+        "syncInterval":
+            MessageLookupByLibrary.simpleMessage("Auto sync interval"),
+        "syncIntervalDays": m2,
+        "syncIntervalHours": m3,
+        "syncIntervalMinutes": m4,
+        "syncServerEmailLabel":
+            MessageLookupByLibrary.simpleMessage("服务器Email"),
+        "syncServerPasswordLabel":
+            MessageLookupByLibrary.simpleMessage("服务器密码"),
+        "syncServerUrlLabel": MessageLookupByLibrary.simpleMessage("服务器URL"),
+        "themeDark": MessageLookupByLibrary.simpleMessage("深色"),
+        "themeFollowSystem": MessageLookupByLibrary.simpleMessage("跟随系统"),
+        "themeLight": MessageLookupByLibrary.simpleMessage("浅色"),
+        "themeMenuLabel": MessageLookupByLibrary.simpleMessage("主题"),
         "view": MessageLookupByLibrary.simpleMessage("查看")
       };
 }

@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../editor/editor.dart';
 import '../files/view/folder_picker.dart';
 import '../notes/notes.dart';
+import '../settings/settings.dart';
 import '../viewer/viewer.dart';
 
 class Routes {
@@ -10,6 +11,7 @@ class Routes {
   static const routeEditor = '/edit';
   static const routeViewer = '/view';
   static const routePicker = '/pick';
+  static const routeSettings = '/settings';
 
   static List<ModularRoute> get() {
     return [
@@ -17,6 +19,7 @@ class Routes {
       ChildRoute(routeEditor, child: (context, args) => Editor(noteId: args.data as String)),
       ChildRoute(routeViewer, child: (context, args) => const Viewer()),
       ChildRoute(routePicker, child: (context, args) => FolderPicker(id: args.data as String)),
+      ChildRoute(routeSettings, child: (context, args) => const Settings()),
     ];
   }
 

@@ -93,5 +93,78 @@
     "nameInputHint": "Untitled",
     "@nameInputHint": {
         "description": "Input hint for name editor"
+    },
+    "buttonLabelApply": "Apply",
+    "@buttonLabelApply": {
+        "description": "Label for button apply"
+    },
+    "buttonLabelDiscard": "Discard",
+    "@buttonLabelDiscard": {
+        "description": "Label for button discard"
+    },
+    "settingsGeneral": "General",
+    "@settingsGeneral": {
+        "description": "Label for general settings"
+    },
+    "themeMenuLabel": "Theme",
+    "@themeMenuLabel": {
+        "description": "Label for theme options"
+    },
+    "themeFollowSystem": "Follow system",
+    "@themeFollowSystem": {
+        "description": "Label for theme system"
+    },
+    "themeLight": "Light",
+    "@themeLight": {
+        "description": "Label for theme light"
+    },
+    "themeDark": "Dark",
+    "@themeDark": {
+        "description": "Label for theme dark"
+    },
+    "settingsSync": "Synchronization",
+    "@settingsSync": {
+        "description": "Label for synchronization settings"
+    },
+    "syncServerUrlLabel": "Server URL",
+    "@syncServerUrlLabel": {
+        "description": "Label for synchronization server url"
+    },
+    "syncServerEmailLabel": "Server Email",
+    "@syncServerEmailLabel": {
+        "description": "Label for synchronization server email"
+    },
+    "syncServerPasswordLabel": "Server password",
+    "@syncServerPasswordLabel": {
+        "description": "Label for synchronization server password"
+    },
+    "syncInterval": "Auto sync interval",
+    "@syncInterval": {
+        "description": "Label for synchronization interval"
+    },
+    "syncDisabled": "Disable",
+    "@syncDisabled": {
+        "description": "Label for synchronization disabled"
+    },
+    "syncIntervalMinutes": "{count, plural, =1{{count} minute}other{{count} minutes}}",
+    "@syncIntervalMinutes": {
+        "description": "Label for synchronization interval minutes",
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "syncIntervalHours": "{count, plural, =1{{count} hour}other{{count} hours}}",
+    "@syncIntervalHours": {
+        "description": "Label for synchronization interval hours",
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "syncIntervalDays": "{count, plural, =1{{count} day}other{{count} days}}",
+    "@syncIntervalDays": {
+        "description": "Label for synchronization interval days",
+        "placeholders": {
+            "count": {}
+        }
     }
 }
