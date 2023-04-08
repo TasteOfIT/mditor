@@ -32,21 +32,21 @@ dependencies:
   cupertino_icons: ^1.0.5
 
   # Bloc - state management
-  bloc: ^8.1.0
-  bloc_concurrency: ^0.2.0
-  flutter_bloc: ^8.1.1
-  hydrated_bloc: ^8.1.0
+  bloc: ^8.1.1
+  bloc_concurrency: ^0.2.1
+  flutter_bloc: ^8.1.2
+  hydrated_bloc: ^9.1.0
   equatable: ^2.0.5
 
   # For file management
-  path_provider: ^2.0.11
+  path_provider: ^2.0.14
   flutter_treeview: ^1.0.7+1
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.0
   flip_card: ^0.6.0
 
   # Documents
-  flutter_widget_from_html_core: ^0.8.5+3
-  markdown: ^5.0.0
+  flutter_widget_from_html_core: ^0.10.0
+  markdown: ^7.0.2
 
   # Dependency injection
   flutter_modular: ^5.0.3
@@ -68,11 +68,11 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
   # launcher icons
-  icons_launcher: ^1.1.8
+  icons_launcher: ^2.1.0
 
   # file tree view
-  build_runner: ^2.2.1
-  json_serializable: ^6.4.0
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -122,9 +122,13 @@ flutter_intl:
   arb_dir: lib/l10n
   output_dir: lib/l10n
 
-flutter_icons:
-  macos: true
-  android: true
-  ios: true
-  image_path: 'assets/icon/launcher.png'
-  image_path_ios: 'assets/icon/launcher-ios.png'
+icons_launcher:
+  image_path: "assets/icon/launcher.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    macos:
+      enable: true
+      image_path: 'assets/icon/launcher-ios.png'

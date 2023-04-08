@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../model/sync_settings.dart';
+part of 'sync_settings.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -10,10 +10,12 @@ SyncSettings _$SyncSettingsFromJson(Map<String, dynamic> json) => SyncSettings(
       serverUrl: json['serverUrl'] as String? ?? '',
       email: json['email'] as String? ?? '',
       password: json['password'] as String? ?? '',
-      interval: $enumDecodeNullable(_$IntervalEnumMap, json['interval']) ?? Interval.disable,
+      interval: $enumDecodeNullable(_$IntervalEnumMap, json['interval']) ??
+          Interval.disable,
     );
 
-Map<String, dynamic> _$SyncSettingsToJson(SyncSettings instance) => <String, dynamic>{
+Map<String, dynamic> _$SyncSettingsToJson(SyncSettings instance) =>
+    <String, dynamic>{
       'serverUrl': instance.serverUrl,
       'email': instance.email,
       'password': instance.password,

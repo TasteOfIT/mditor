@@ -4,8 +4,8 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorage {
   static Future<Storage> createStorage() async {
-    return HydratedStorage.build(
-      storageDirectory: kIsWeb ? HydratedStorage.webStorageDirectory : await getTemporaryDirectory(),
+    return await HydratedStorage.build(
+      storageDirectory: kIsWeb ? HydratedStorage.webStorageDirectory : await getApplicationSupportDirectory(),
     );
   }
 }

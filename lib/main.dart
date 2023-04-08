@@ -14,11 +14,9 @@ void main() async {
   };
   WidgetsFlutterBinding.ensureInitialized();
   runZonedGuarded(() async {
-    HydratedBlocOverrides.runZoned(
-      () => runApp((ModularApp(module: AppModule(), child: const MyApp()))),
-      blocObserver: AppBlocObserver(),
-      storage: await LocalStorage.createStorage(),
-    );
+    Bloc.observer = const AppBlocObserver();
+    HydratedBloc.storage = await LocalStorage.createStorage();
+    runApp((ModularApp(module: AppModule(), child: const MyApp())));
   }, (error, stack) {
     Log.e(error.toString(), stackTrace: stack);
   });

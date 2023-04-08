@@ -3,6 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'log.dart';
 
 class AppBlocObserver extends BlocObserver {
+  const AppBlocObserver();
+
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
