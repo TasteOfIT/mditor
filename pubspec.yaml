@@ -45,7 +45,6 @@ dependencies:
   flip_card: ^0.6.0
 
   # Documents
-  flutter_widget_from_html_core: ^0.10.0
   markdown: ^7.0.2
 
   # Dependency injection

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:markdown/markdown.dart' hide Text;
 import 'package:markdown_viewer/widgets/markdown_viewer.dart';
 
 import '../../app/app.dart';
@@ -8,8 +6,7 @@ import '../../widgets/app_bar.dart';
 import '../models/doc.dart';
 
 class Viewer extends StatefulWidget {
-  const Viewer({Key? key, this.title = '', this.content = ''})
-      : super(key: key);
+  const Viewer({Key? key, this.title = '', this.content = ''}) : super(key: key);
 
   final String title;
   final String content;
@@ -31,8 +28,7 @@ class _ViewerState extends State<Viewer> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child:
-            MarkDownViewer(content: doc == null ? widget.content : doc.content),
+        child: MarkDownViewer(content: doc == null ? widget.content : doc.content),
       ),
     );
   }
