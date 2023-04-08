@@ -44,9 +44,7 @@ class _NotesState extends State<Notes> {
   void _addNote() async {
     String? parentId = context.read<WorkingCubit>().state.notebookId;
     if (parentId != null && parentId.isNotEmpty == true) {
-      await FileDialogs.addNotebook(context, (name) {
-        _notesBloc.add(AddNotebook(parentId, name));
-      });
+      _notesBloc.add(AddNote(parentId));
     }
   }
 
@@ -66,17 +64,6 @@ class _NotesState extends State<Notes> {
   }
 
   Widget _container(WorkingState workingState) {
-    bool showEmpty = workingState.notebookId?.isNotEmpty != true;
-    if (showEmpty) {
-      return FilesDrawerScaffold(
-        const Empty(),
-        appBar: AppBarBuilder.get(
-          S.of(context).home,
-          const [],
-        ),
-        floatingActionButton: _floatingActionButton(context, !showEmpty),
-      );
-    }
     return BlocConsumer<NotesBloc, NotesState>(
       listener: (context, state) {
         if (state is NoteAdded) {
@@ -84,10 +71,18 @@ class _NotesState extends State<Notes> {
         }
       },
       builder: (context, state) {
+        bool showEmpty = workingState.notebookId?.isNotEmpty == false;
+        if (showEmpty || state is! NotesLoaded) {
+          return FilesDrawerScaffold(
+            const Empty(),
+            appBar: AppBarBuilder.get(S.of(context).home, const []),
+            floatingActionButton: _floatingActionButton(context, false),
+          );
+        }
         return FilesDrawerScaffold(
           _content(state),
           appBar: AppBarBuilder.get(_formatTitle(state), const []),
-          floatingActionButton: _floatingActionButton(context, !showEmpty),
+          floatingActionButton: _floatingActionButton(context, true),
         );
       },
     );
@@ -121,9 +116,9 @@ class _NotesState extends State<Notes> {
     String title = '';
     if (state is NotesLoaded) {
       title = state.name;
-    }
-    if (title.isEmpty) {
-      title = S.of(context).nameInputHint;
+      if (title.isEmpty) {
+        title = S.of(context).nameInputHint;
+      }
     }
     return title;
   }

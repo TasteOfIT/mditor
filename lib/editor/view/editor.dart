@@ -56,7 +56,7 @@ class _EditorState extends State<Editor> {
 
   void _preview() {
     _saveContent();
-    Routes.add(Routes.routeViewer, args: Doc(title: _title, content: body));
+    Routes.add(Routes.routeViewer, args: Doc(title: _formatTitle(), content: body));
   }
 
   void _openFolder() {
@@ -70,9 +70,13 @@ class _EditorState extends State<Editor> {
   }
 
   void _delete() async {
-    await FileDialogs.deleteFile(context, _title, () {
+    await FileDialogs.deleteFile(context, _formatTitle(), () {
       _noteContentBloc.add(DeleteNote(_noteId));
     });
+  }
+
+  void _deleteNoConfirmation() async {
+    _noteContentBloc.add(DeleteNote(_noteId));
   }
 
   @override
@@ -151,8 +155,13 @@ class _EditorState extends State<Editor> {
 
   @override
   void deactivate() {
-    Log.d('Save when deactivate');
-    _saveContent();
+    if (body.isEmpty && _title.isEmpty) {
+      Log.d('Delete since nothing input');
+      _deleteNoConfirmation();
+    } else {
+      Log.d('Save when deactivate');
+      _saveContent();
+    }
     super.deactivate();
   }
 
