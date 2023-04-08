@@ -28,7 +28,7 @@ class _ViewerState extends State<Viewer> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: MarkDownViewer(content: doc == null ? widget.content : doc.content),
+        child: MarkdownViewer(content: doc == null ? widget.content : doc.content),
       ),
     );
   }
