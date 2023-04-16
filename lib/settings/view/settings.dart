@@ -1,7 +1,7 @@
+import 'package:common/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../locale/locale.dart';
-import '../../widgets/app_bar.dart';
 import 'categories/general.dart';
 import 'categories/synchronization.dart';
 

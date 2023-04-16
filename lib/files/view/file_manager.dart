@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:common/widgets.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,8 +7,6 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 
 import '../../app/app.dart';
 import '../../locale/locale.dart';
-import '../../widgets/dividers.dart';
-import '../../widgets/icon_text_menu.dart';
 import '../../widgets/tree/file_tree.dart';
 import '../bloc/file_list_bloc.dart';
 import '../bloc/working_cubit.dart';

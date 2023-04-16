@@ -1,8 +1,7 @@
+import 'package:common/widgets.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../widgets/dividers.dart';
 
 class SettingsItem {
   static Widget spaceVertical(double height) {
@@ -26,7 +25,7 @@ class SettingsItem {
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Text(
             label,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
             maxLines: 1,
             overflow: TextOverflow.clip,
           ),

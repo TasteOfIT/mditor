@@ -1,10 +1,10 @@
+import 'package:common/widgets.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:markdown_viewer/markdown_viewer.dart';
 
 import '../../app/app.dart';
-import '../../widgets/app_bar.dart';
 
 class Viewer extends StatefulWidget {
   const Viewer({Key? key, this.noteId = ''}) : super(key: key);

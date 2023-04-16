@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common/common.dart';
+import 'package:common/widgets.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:markdown_editor/markdown_editor.dart';
 import '../../app/app.dart';
 import '../../files/files.dart';
 import '../../locale/locale.dart';
-import '../../widgets/app_bar.dart';
 import '../bloc/note_content_bloc.dart';
 
 class Editor extends StatefulWidget {

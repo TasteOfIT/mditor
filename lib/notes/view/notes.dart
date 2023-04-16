@@ -1,3 +1,4 @@
+import 'package:common/widgets.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../app/app.dart';
 import '../../files/files.dart';
 import '../../locale/locale.dart';
-import '../../widgets/app_bar.dart';
 import '../bloc/notes_bloc.dart';
 import 'empty.dart';
 import 'note_list.dart';
