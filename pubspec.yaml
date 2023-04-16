@@ -59,6 +59,8 @@ dependencies:
 
   markdown_viewer:
     path: packages/markdown_viewer
+  markdown_editor:
+    path: packages/markdown_editor
 
 dev_dependencies:
   flutter_test:

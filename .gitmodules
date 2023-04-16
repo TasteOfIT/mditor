@@ -7,3 +7,6 @@
 [submodule "packages/markdown_parser"]
 	path = packages/markdown_parser
 	url = git@github.com:TasteOfIT/markdown_parser.git
+[submodule "packages/markdown_editor"]
+	path = packages/markdown_editor
+	url = git@github.com:TasteOfIT/markdown_editor.git

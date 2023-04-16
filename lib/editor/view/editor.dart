@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:markdown_editor/markdown_editor.dart';
 
 import '../../app/app.dart';
 import '../../files/files.dart';
@@ -12,10 +13,9 @@ import '../../widgets/app_bar.dart';
 import '../bloc/note_content_bloc.dart';
 
 class Editor extends StatefulWidget {
-  const Editor({Key? key, this.noteId = '', this.onChanged}) : super(key: key);
+  const Editor({Key? key, this.noteId = ''}) : super(key: key);
 
   final String noteId;
-  final ValueChanged? onChanged;
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +24,7 @@ class Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<Editor> {
-  final TextEditingController _controller = TextEditingController();
+  late Controller _controller;
   late NoteRepository _noteRepository;
   late NoteContentBloc _noteContentBloc;
   late String _noteId;
@@ -32,18 +32,14 @@ class _EditorState extends State<Editor> {
 
   late Timer _autoSaveTimer;
 
-  String get body => _controller.value.text;
+  String get body => _controller.data;
 
   @override
   void initState() {
     super.initState();
     _noteRepository = RepositoryProvider.of<NoteRepository>(context);
     _noteContentBloc = NoteContentBloc(_noteRepository);
-    _controller
-      ..text = ''
-      ..addListener(() {
-        widget.onChanged?.call(body);
-      });
+    _controller = Controller(widget.noteId, '');
     _noteId = widget.noteId;
     _title = '';
     _noteContentBloc.add(LoadNoteContent(_noteId));
@@ -104,17 +100,7 @@ class _EditorState extends State<Editor> {
       },
       builder: (context, state) {
         return FilesDrawerScaffold(
-          TextField(
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              hintText: S.of(context).inputHint,
-            ),
-            maxLines: 99999,
-            scrollPadding: const EdgeInsets.all(20.0),
-            keyboardType: TextInputType.multiline,
-            autofocus: true,
-            controller: _controller,
-          ),
+          SimpleEditor(S.of(context).inputHint, _controller),
           appBar: AppBarBuilder.get(
             _formatTitle(),
             [
@@ -132,7 +118,7 @@ class _EditorState extends State<Editor> {
     if (state is NoteContentLoaded) {
       setState(() {
         _title = state.title;
-        _controller.text = state.body;
+        _controller.data = state.body;
       });
     } else if (state is NoteTitleChanged) {
       setState(() {
