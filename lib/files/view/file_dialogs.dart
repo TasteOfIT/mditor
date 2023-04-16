@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 import '../../widgets/view_dialogs.dart';
 
 class FileDialogs {

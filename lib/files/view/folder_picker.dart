@@ -1,10 +1,11 @@
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
 import '../../app/app.dart';
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 import '../../widgets/app_bar.dart';
 import '../../widgets/tree/file_picker.dart';
 import '../../widgets/tree/file_picker_cubit.dart';

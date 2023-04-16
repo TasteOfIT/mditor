@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 
 class Empty extends StatelessWidget {
   const Empty({

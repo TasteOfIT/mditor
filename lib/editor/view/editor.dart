@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,7 @@ import 'package:markdown_editor/markdown_editor.dart';
 
 import '../../app/app.dart';
 import '../../files/files.dart';
-import '../../l10n/wording.dart';
-import '../../viewer/viewer.dart';
+import '../../locale/locale.dart';
 import '../../widgets/app_bar.dart';
 import '../bloc/note_content_bloc.dart';
 
@@ -52,7 +52,7 @@ class _EditorState extends State<Editor> {
 
   void _preview() {
     _saveContent();
-    Routes.add(Routes.routeViewer, args: Doc(title: _formatTitle(), content: body));
+    Routes.add(Routes.routeViewer, args: _noteId);
   }
 
   void _openFolder() {

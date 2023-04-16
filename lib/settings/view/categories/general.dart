@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../design/cubit/theme_mode_cubit.dart';
-import '../../../l10n/wording.dart';
+import '../../../locale/locale.dart';
+import '../../cubit/theme_mode_cubit.dart';
 import '../settings_item.dart';
 
 class General extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Interval;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../l10n/wording.dart';
+import '../../../locale/locale.dart';
 import '../../cubit/sync_settings_cubit.dart';
 import '../../model/sync_settings.dart';
 import '../settings_item.dart';

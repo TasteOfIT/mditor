@@ -1,15 +1,15 @@
+import 'package:data/data.dart';
 import 'package:flutter/material.dart';
-import 'package:markdown_viewer/widgets/markdown_viewer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:markdown_viewer/markdown_viewer.dart';
 
 import '../../app/app.dart';
 import '../../widgets/app_bar.dart';
-import '../models/doc.dart';
 
 class Viewer extends StatefulWidget {
-  const Viewer({Key? key, this.title = '', this.content = ''}) : super(key: key);
+  const Viewer({Key? key, this.noteId = ''}) : super(key: key);
 
-  final String title;
-  final String content;
+  final String noteId;
 
   @override
   State<StatefulWidget> createState() {
@@ -18,17 +18,46 @@ class Viewer extends StatefulWidget {
 }
 
 class _ViewerState extends State<Viewer> {
+  late NoteRepository _noteRepository;
+  late ViewDocBloc _viewDocBloc;
+  String _title = '';
+
+  Future<Doc?> _loadNote(String noteId) {
+    return _noteRepository.getNote(noteId).timeout(const Duration(seconds: 5), onTimeout: () => null).then((note) {
+      if (note != null) {
+        return Doc(title: note.title, content: note.body);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  void _updateTitle(String title) {
+    setState(() {
+      _title = title;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _noteRepository = RepositoryProvider.of<NoteRepository>(context);
+    _viewDocBloc = ViewDocBloc(_loadNote);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final doc = Routes.getData() as Doc?;
     return Scaffold(
       appBar: AppBarBuilder.get(
-        doc == null ? widget.title : doc.title,
+        _title,
         [ActionData(Icons.edit_outlined, _editNote)],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: MarkdownViewer(content: doc == null ? widget.content : doc.content),
+      body: BlocProvider<ViewDocBloc>(
+        create: (context) => _viewDocBloc,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: MarkdownViewer(widget.noteId, _viewDocBloc, _updateTitle),
+        ),
       ),
     );
   }

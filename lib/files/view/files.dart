@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/app.dart';
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 import '../../widgets/dividers.dart';
 import '../../widgets/icon_text_menu.dart';
 import 'file_manager.dart';

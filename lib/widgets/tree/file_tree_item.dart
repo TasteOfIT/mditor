@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 import '../model/file.dart';
 import 'file_tree.dart';
 

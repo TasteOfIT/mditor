@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../app/app.dart';
 import '../../files/files.dart';
 import '../../widgets/model/file.dart';
 

@@ -1,19 +1,17 @@
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../design/locale.dart';
-import '../design/theme.dart';
 import '../files/files.dart';
-import '../l10n/wording.dart';
+import '../locale/locale.dart';
+import '../settings/cubit/theme_mode_cubit.dart';
 import '../settings/settings.dart';
 import 'app_routes.dart';
 
 export 'app_bloc_observer.dart';
 export 'app_routes.dart';
-export 'log.dart';
-export 'platform.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

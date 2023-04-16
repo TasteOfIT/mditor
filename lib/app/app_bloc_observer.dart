@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-
-import 'log.dart';
+import 'package:common/common.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../app/app.dart';
 
 part 'note_content_event.dart';
 

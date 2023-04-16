@@ -17,7 +17,7 @@ class Routes {
     return [
       ChildRoute(routeNotes, child: (context, args) => Notes(notebookId: args.data as String?)),
       ChildRoute(routeEditor, child: (context, args) => Editor(noteId: args.data as String)),
-      ChildRoute(routeViewer, child: (context, args) => const Viewer()),
+      ChildRoute(routeViewer, child: (context, args) => Viewer(noteId: args.data as String)),
       ChildRoute(routePicker, child: (context, args) => FolderPicker(id: args.data as String)),
       ChildRoute(routeSettings, child: (context, args) => const Settings()),
     ];

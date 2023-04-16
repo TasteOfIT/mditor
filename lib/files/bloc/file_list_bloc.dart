@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:common/common.dart';
 import 'package:data/data.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../app/log.dart';
 import '../../widgets/tree/file_tree.dart';
 import '../utils/file_extension.dart';
 

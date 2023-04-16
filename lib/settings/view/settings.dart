@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/wording.dart';
+import '../../locale/locale.dart';
 import '../../widgets/app_bar.dart';
 import 'categories/general.dart';
 import 'categories/synchronization.dart';

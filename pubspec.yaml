@@ -51,6 +51,9 @@ dependencies:
   flutter_modular: ^5.0.3
   modular_bloc_bind: ^1.0.1
 
+  common:
+    path: packages/common
+
   # Data source
   joplin_database:
     path: packages/joplin_database
@@ -120,8 +123,8 @@ flutter_intl:
   enabled: true
   class_name: S
   main_locale: en
-  arb_dir: lib/l10n
-  output_dir: lib/l10n
+  arb_dir: lib/locale
+  output_dir: lib/locale
 
 icons_launcher:
   image_path: "assets/icon/launcher.png"
