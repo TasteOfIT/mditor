@@ -9,6 +9,11 @@ A markdown editor
 - [Markdown Guide](https://www.markdownguide.org/)
 - [Github flavored markdown](https://github.github.com/gfm/)
 
+- [markdown for dart](https://github.com/dart-lang/markdown) as parser
+- Translate html tags to elements via [markdown_parser](packages/markdown_parser),
+- [Syntax details](packages/markdown_parser/README.md)
+- Show elements in flutter widgets via [markdown_viewer](packages/markdown_viewer)
+
 ### Setup
 
 - Flutter 3.0+(with Dart)
@@ -46,3 +51,9 @@ A markdown editor
 
 > A dependency injection and routes framework
 > [Developer guide](https://modular.flutterando.com.br/docs/flutter_modular/start)
+
+### Drift
+
+> A persistence library for Dart
+> Used to store notes: [joplin_database](packages/joplin_database)
+> [Developer guide](https://drift.simonbinder.eu/docs/getting-started/)
