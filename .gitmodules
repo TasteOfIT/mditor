@@ -11,5 +11,5 @@
 	path = packages/markdown_editor
 	url = git@github.com:TasteOfIT/markdown_editor.git
 [submodule "common"]
-	path = common
+	path = packages/common
 	url = git@github.com:TasteOfIT/flutter-common.git
