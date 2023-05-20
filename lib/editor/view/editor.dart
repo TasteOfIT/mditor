@@ -6,6 +6,7 @@ import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:markdown_editor/markdown_editor.dart';
+import 'package:markdown_editor/view/InsertBar.dart';
 
 import '../../app/app.dart';
 import '../../files/files.dart';
@@ -29,6 +30,7 @@ class _EditorState extends State<Editor> {
   late NoteContentBloc _noteContentBloc;
   late String _noteId;
   late String _title;
+  bool _isShowInsertBar = false;
 
   late Timer _autoSaveTimer;
 
@@ -48,6 +50,12 @@ class _EditorState extends State<Editor> {
 
   void _saveContent() {
     _noteContentBloc.add(ChangeNoteBody(_noteId, body));
+  }
+
+  void _toggleInsertBar() {
+    setState(() {
+      _isShowInsertBar = !_isShowInsertBar;
+    });
   }
 
   void _preview() {
@@ -100,10 +108,19 @@ class _EditorState extends State<Editor> {
       },
       builder: (context, state) {
         return FilesDrawerScaffold(
-          SimpleEditor(S.of(context).inputHint, _controller),
+          Column(
+            children: [
+              Flexible(
+                child: SimpleEditor(S.of(context).inputHint, _controller),
+              ),
+              Offstage(
+                  offstage: !_isShowInsertBar, child: InsertBar(_controller))
+            ],
+          ),
           appBar: AppBarBuilder.get(
             _formatTitle(),
             [
+              ActionData(Icons.title, _toggleInsertBar),
               ActionData(Icons.preview, _preview),
               ActionData(Icons.edit_outlined, _rename),
               ActionData(Icons.delete_outline_rounded, _delete, color: Theme.of(context).errorColor),
